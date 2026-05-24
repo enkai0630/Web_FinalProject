@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食品標示分析｜食品安全 AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="chat-app food-page-app">
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-mark">食</span>
+            <div>
+                <strong>食品安全 AI</strong>
+                <small>心情陪伴與食品安全工具</small>
+            </div>
+        </div>
+        <nav class="nav" aria-label="主要功能">
+            <ul>
+                <li class="nav-item"><a href="{{ url_for('home') }}">AI 對話</a></li>
+                <li class="nav-item active"><a href="{{ url_for('food_label_page') }}">食品標示分析</a></li>
+                <li class="nav-item"><a href="#">食品安全知識</a></li>
+                <li class="nav-item"><a href="#">設定</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content page-content">
+        <header class="chat-header">
+            <div>
+                <p class="eyebrow">Nutrition Label Analyzer</p>
+                <h1>食品標示分析</h1>
+            </div>
+            <div class="status-panel">
+                <span class="status-badge">圖片分析</span>
+            </div>
+        </header>
+
+        <section class="food-analyzer-layout">
+            <div class="food-analyzer-main">
+                <form id="food-label-form" class="food-label-form food-label-form--large">
+                    <label class="file-drop-zone file-drop-zone--large" for="food-label-image">
+                        <span class="file-drop-title">上傳食品成分表或營養標示圖片</span>
+                        <span class="file-drop-hint">支援 JPG、JPEG、PNG，5MB 以下。請盡量拍到完整的熱量、糖、鈉、脂肪與成分資訊。</span>
+                    </label>
+                    <input type="file" id="food-label-image" name="image" accept="image/jpeg,image/png" hidden>
+                    <img id="food-label-preview" class="food-label-preview food-label-preview--large" alt="食品標示圖片預覽" hidden>
+                    <button type="submit" class="analyze-button">開始分析健康程度</button>
+                </form>
+
+                <div id="food-label-status" class="food-label-status" role="status"></div>
+                <div id="food-label-result" class="food-label-result food-label-result--large" hidden></div>
+            </div>
+
+            <aside class="food-analyzer-side">
+                <section class="info-section">
+                    <h3>分析會看什麼？</h3>
+                    <ul class="suggestion-list">
+                        <li>糖、鈉、熱量、飽和脂肪、反式脂肪</li>
+                        <li>成分排序與是否有高風險成分</li>
+                        <li>OCR 文字是否足夠支持判斷</li>
+                    </ul>
+                </section>
+                <section class="info-section">
+                    <h3>結果怎麼解讀？</h3>
+                    <ul class="suggestion-list">
+                        <li>健康：標示資訊相對友善，但仍要看份量</li>
+                        <li>可以偶爾吃：不是完全不能吃，但不適合高頻率</li>
+                        <li>不健康：有明顯高糖、高鈉或反式脂肪等風險</li>
+                        <li>無法判斷：圖片資訊不足，系統不會硬猜</li>
+                    </ul>
+                </section>
+            </aside>
+        </section>
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/food_label.js') }}" defer></script>
+
+</body>
+</html>
