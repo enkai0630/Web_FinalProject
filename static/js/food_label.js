@@ -3,6 +3,7 @@ const foodLabelInput = document.getElementById('food-label-image');
 const foodLabelPreview = document.getElementById('food-label-preview');
 const foodLabelStatus = document.getElementById('food-label-status');
 const foodLabelResult = document.getElementById('food-label-result');
+const analyzeButton = foodLabelForm.querySelector('.analyze-button');
 
 foodLabelForm.addEventListener('submit', handleFoodLabelAnalyze);
 foodLabelInput.addEventListener('change', handleFoodLabelPreview);
@@ -41,9 +42,8 @@ async function handleFoodLabelAnalyze(e) {
     const formData = new FormData();
     formData.append('image', file);
 
-    foodLabelStatus.textContent = '正在讀取圖片並分析營養標示...';
-    foodLabelResult.hidden = true;
-    foodLabelResult.innerHTML = '';
+    setAnalyzing(true);
+    showFoodAnalysisLoading(file.name);
 
     try {
         const response = await fetch('/api/analyze-food-label', {
@@ -60,7 +60,52 @@ async function handleFoodLabelAnalyze(e) {
         foodLabelStatus.textContent = `已分析：${result.data.filename}`;
     } catch (error) {
         foodLabelStatus.textContent = error.message || '食品標示分析失敗，請稍後再試。';
+        foodLabelResult.hidden = true;
+        foodLabelResult.innerHTML = '';
+    } finally {
+        setAnalyzing(false);
     }
+}
+
+function setAnalyzing(isAnalyzing) {
+    foodLabelInput.disabled = isAnalyzing;
+    analyzeButton.disabled = isAnalyzing;
+    analyzeButton.textContent = isAnalyzing ? '分析中...' : '開始分析健康程度';
+}
+
+function showFoodAnalysisLoading(filename) {
+    foodLabelStatus.textContent = '正在處理圖片，請稍候。';
+    foodLabelResult.hidden = false;
+    foodLabelResult.innerHTML = '';
+
+    const loading = document.createElement('div');
+    loading.className = 'food-analysis-loading';
+
+    const spinner = document.createElement('div');
+    spinner.className = 'food-analysis-spinner';
+    spinner.setAttribute('aria-hidden', 'true');
+
+    const content = document.createElement('div');
+    const title = document.createElement('strong');
+    title.className = 'loading-dots';
+    title.textContent = 'AI 正在分析食品標示';
+
+    const detail = document.createElement('p');
+    detail.textContent = `目前處理：${filename}。系統會先讀取圖片文字，再判斷熱量、糖、鈉、脂肪與成分風險。`;
+
+    const steps = document.createElement('ul');
+    ['讀取圖片', '辨識 OCR 文字', '分析營養標示', '產生健康分級與理由'].forEach((step) => {
+        const item = document.createElement('li');
+        item.textContent = step;
+        steps.appendChild(item);
+    });
+
+    content.appendChild(title);
+    content.appendChild(detail);
+    content.appendChild(steps);
+    loading.appendChild(spinner);
+    loading.appendChild(content);
+    foodLabelResult.appendChild(loading);
 }
 
 function renderFoodLabelResult(analysis) {

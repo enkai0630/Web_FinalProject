@@ -373,6 +373,11 @@ body {
     background: #256653;
 }
 
+.analyze-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.68;
+}
+
 .food-label-status {
     min-height: 20px;
     margin-top: 10px;
@@ -466,6 +471,56 @@ body {
     color: var(--color-muted);
     font-family: Consolas, 'Courier New', monospace;
     font-size: 0.78rem;
+}
+
+.food-analysis-loading {
+    display: grid;
+    grid-template-columns: 42px 1fr;
+    gap: 14px;
+    align-items: start;
+}
+
+.food-analysis-spinner {
+    width: 34px;
+    height: 34px;
+    border: 4px solid var(--color-primary-soft);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+
+.food-analysis-loading strong {
+    display: block;
+    color: var(--color-primary);
+    font-size: 1rem;
+}
+
+.food-analysis-loading p {
+    margin: 6px 0 10px;
+    color: var(--color-muted);
+}
+
+.food-analysis-loading ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.food-analysis-loading li {
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    font-size: 0.86rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .food-page-app {
@@ -578,5 +633,329 @@ body {
 
     .food-analyzer-layout {
         padding: 16px;
+    }
+}
+
+.knowledge-layout {
+    display: grid;
+    grid-template-columns: minmax(360px, 1fr) minmax(300px, 420px);
+    gap: 24px;
+    min-height: 0;
+    padding: 24px;
+    overflow: auto;
+}
+
+.bubble-stage {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    align-content: center;
+    gap: 22px;
+    min-height: 560px;
+    padding: 28px;
+    border: 1px solid var(--color-primary-soft);
+    border-radius: 8px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(244, 184, 96, 0.24), transparent 26%),
+        linear-gradient(145deg, #fbfdfb 0%, #eef7f2 48%, #fff8e8 100%);
+    overflow: hidden;
+}
+
+.bubble-stage::before {
+    content: '';
+    position: absolute;
+    inset: 18px;
+    border: 1px dashed rgba(47, 125, 104, 0.18);
+    border-radius: 8px;
+    pointer-events: none;
+}
+
+.knowledge-bubble {
+    position: relative;
+    z-index: 1;
+    width: min(156px, 100%);
+    aspect-ratio: 1;
+    justify-self: center;
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 50%;
+    box-shadow: 0 14px 28px rgba(36, 48, 43, 0.14);
+    color: var(--color-text);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 18px;
+    text-align: center;
+    transform: translateX(var(--bubble-x));
+    animation: floatBubble 5.8s ease-in-out infinite;
+    animation-delay: var(--bubble-delay);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.knowledge-bubble:hover,
+.knowledge-bubble.is-selected {
+    border-color: var(--color-primary);
+    box-shadow: 0 18px 36px rgba(47, 125, 104, 0.24);
+}
+
+.knowledge-bubble:hover {
+    transform: translateX(var(--bubble-x)) translateY(-6px) scale(1.03);
+}
+
+.knowledge-bubble.is-selected {
+    outline: 3px solid rgba(47, 125, 104, 0.18);
+}
+
+.knowledge-bubble--red {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #ffd7d2 38%, #e85f4f 100%);
+}
+
+.knowledge-bubble--orange {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #ffe3bc 38%, #e49a35 100%);
+}
+
+.knowledge-bubble--blue {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #d9edff 38%, #5e99c7 100%);
+}
+
+.knowledge-bubble--green {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #dff3ea 38%, #2f7d68 100%);
+}
+
+.knowledge-bubble--purple {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #eadfff 38%, #8b6ac8 100%);
+}
+
+.knowledge-bubble--yellow {
+    background: radial-gradient(circle at 35% 25%, #ffffff 0%, #fff0a8 38%, #d4a82f 100%);
+}
+
+.bubble-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.72);
+    font-weight: 800;
+}
+
+.bubble-title {
+    font-weight: 800;
+    font-size: 1.05rem;
+}
+
+.bubble-risk {
+    color: rgba(36, 48, 43, 0.76);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.knowledge-detail {
+    min-width: 0;
+}
+
+.detail-empty,
+.detail-card {
+    border: 1px solid var(--color-primary-soft);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(36, 48, 43, 0.08);
+}
+
+.detail-empty {
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 28px;
+    text-align: center;
+    color: var(--color-muted);
+}
+
+.detail-empty h2,
+.detail-card h2,
+.detail-card h3 {
+    color: var(--color-text);
+    margin: 0;
+}
+
+.detail-empty h2 {
+    margin-top: 12px;
+}
+
+.detail-empty p {
+    max-width: 280px;
+    line-height: 1.6;
+}
+
+.detail-empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-primary-soft);
+    color: var(--color-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.detail-card {
+    padding: 22px;
+}
+
+.detail-card-header {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--color-primary-soft);
+}
+
+.detail-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.detail-icon--red { background: #c94a3d; }
+.detail-icon--orange { background: #c47b1f; }
+.detail-icon--blue { background: #427da8; }
+.detail-icon--green { background: var(--color-primary); }
+.detail-icon--purple { background: #7655b1; }
+.detail-icon--yellow { background: #b28517; }
+
+.detail-category {
+    margin: 0 0 4px;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.detail-risk {
+    border-radius: 999px;
+    background: var(--color-danger-soft);
+    color: #9f2b3f;
+    padding: 6px 10px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.detail-summary {
+    line-height: 1.7;
+    margin: 18px 0;
+}
+
+.detail-section {
+    margin-top: 18px;
+}
+
+.detail-section h3 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.detail-section p,
+.detail-section li {
+    color: var(--color-muted);
+    line-height: 1.65;
+}
+
+.detail-section ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.detail-section li {
+    border-radius: 999px;
+    background: #f1f5f2;
+    padding: 6px 10px;
+    font-size: 0.88rem;
+}
+
+.detail-reminder {
+    padding: 14px;
+    border-radius: 8px;
+    background: #fff8e8;
+}
+
+.detail-source {
+    display: inline-flex;
+    margin-top: 18px;
+    color: var(--color-primary);
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.detail-source:hover {
+    text-decoration: underline;
+}
+
+@keyframes floatBubble {
+    0%, 100% {
+        translate: 0 0;
+    }
+    50% {
+        translate: 0 -18px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .knowledge-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .bubble-stage {
+        min-height: 440px;
+    }
+}
+
+@media (max-width: 768px) {
+    .knowledge-layout {
+        padding: 16px;
+    }
+
+    .bubble-stage {
+        grid-template-columns: repeat(2, minmax(118px, 1fr));
+        gap: 16px;
+        min-height: auto;
+        padding: 20px;
+    }
+
+    .knowledge-bubble {
+        width: min(138px, 100%);
+        padding: 14px;
+    }
+
+    .detail-card-header {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .detail-risk {
+        grid-column: 1 / -1;
+        justify-self: start;
+    }
+}
+
+@media (max-width: 420px) {
+    .bubble-stage {
+        grid-template-columns: 1fr;
     }
 }

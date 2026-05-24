@@ -64,6 +64,11 @@ def food_label_page():
     return render_template("food_label.html")
 
 
+@app.route("/food-safety-knowledge")
+def food_safety_knowledge_page():
+    return render_template("food_safety_knowledge.html")
+
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
     try:

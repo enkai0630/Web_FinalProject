@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食品安全知識｜食品安全 AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="chat-app food-page-app knowledge-page-app">
+    <aside class="sidebar">
+        <div class="brand">
+            <span class="brand-mark">食</span>
+            <div>
+                <strong>食品安全 AI</strong>
+                <small>心情陪伴與食品安全工具</small>
+            </div>
+        </div>
+        <nav class="nav" aria-label="主要功能">
+            <ul>
+                <li class="nav-item"><a href="{{ url_for('home') }}">AI 對話</a></li>
+                <li class="nav-item"><a href="{{ url_for('food_label_page') }}">食品標示分析</a></li>
+                <li class="nav-item active"><a href="{{ url_for('food_safety_knowledge_page') }}">食品安全知識</a></li>
+                <li class="nav-item"><a href="#">設定</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content page-content">
+        <header class="chat-header">
+            <div>
+                <p class="eyebrow">Food Safety Knowledge</p>
+                <h1>食品安全知識</h1>
+            </div>
+            <div class="status-panel">
+                <span class="status-badge">新聞科普</span>
+            </div>
+        </header>
+
+        <section class="knowledge-layout">
+            <div class="bubble-stage" id="bubble-stage" aria-label="食品安全新聞與物質主題"></div>
+
+            <aside class="knowledge-detail" id="knowledge-detail" aria-live="polite">
+                <div class="detail-empty">
+                    <span class="detail-empty-icon">?</span>
+                    <h2>點選一個泡泡</h2>
+                    <p>查看食品安全事件、可能出現的食品、人體風險與日常提醒。</p>
+                </div>
+            </aside>
+        </section>
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/food_safety_knowledge.js') }}" defer></script>
+
+</body>
+</html>
