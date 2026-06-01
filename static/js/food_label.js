@@ -5,6 +5,7 @@ const foodLabelStatus = document.getElementById('food-label-status');
 const foodLabelResult = document.getElementById('food-label-result');
 const analyzeButton = foodLabelForm.querySelector('.analyze-button');
 const analyzeButtonText = analyzeButton.querySelector('span');
+let loadingStepTimer = null;
 
 foodLabelForm.addEventListener('submit', handleFoodLabelAnalyze);
 foodLabelInput.addEventListener('change', handleFoodLabelPreview);
@@ -14,6 +15,7 @@ function handleFoodLabelPreview() {
     foodLabelResult.hidden = true;
     foodLabelResult.innerHTML = '';
     foodLabelStatus.textContent = '';
+    clearLoadingStepTimer();
 
     if (!file) {
         foodLabelPreview.hidden = true;
@@ -60,10 +62,12 @@ async function handleFoodLabelAnalyze(e) {
         renderFoodLabelResult(result.data.analysis);
         foodLabelStatus.textContent = `已分析：${result.data.filename}`;
     } catch (error) {
+        clearLoadingStepTimer();
         foodLabelStatus.textContent = error.message || '食品標示分析失敗，請稍後再試。';
         foodLabelResult.hidden = true;
         foodLabelResult.innerHTML = '';
     } finally {
+        clearLoadingStepTimer();
         setAnalyzing(false);
     }
 }
@@ -75,6 +79,7 @@ function setAnalyzing(isAnalyzing) {
 }
 
 function showFoodAnalysisLoading(filename) {
+    clearLoadingStepTimer();
     foodLabelStatus.textContent = '正在處理圖片，請稍候。';
     foodLabelResult.hidden = false;
     foodLabelResult.innerHTML = '';
@@ -95,9 +100,13 @@ function showFoodAnalysisLoading(filename) {
     detail.textContent = `目前處理：${filename}。系統會先讀取圖片文字，再判斷熱量、糖、鈉、脂肪與成分風險。`;
 
     const steps = document.createElement('ul');
-    ['讀取圖片', '辨識 OCR 文字', '分析營養標示', '產生健康分級與理由'].forEach((step) => {
+    ['讀取圖片', '辨識 OCR 文字', '分析營養標示', '產生健康分級與理由'].forEach((step, index) => {
         const item = document.createElement('li');
         item.textContent = step;
+        item.dataset.step = String(index);
+        if (index === 0) {
+            item.className = 'is-current';
+        }
         steps.appendChild(item);
     });
 
@@ -107,9 +116,11 @@ function showFoodAnalysisLoading(filename) {
     loading.appendChild(spinner);
     loading.appendChild(content);
     foodLabelResult.appendChild(loading);
+    startLoadingStepProgress(steps);
 }
 
 function renderFoodLabelResult(analysis) {
+    clearLoadingStepTimer();
     const scoreText = analysis.score === null || analysis.score === undefined
         ? '無法評分'
         : `${Math.round(Number(analysis.score))} / 100`;
@@ -133,6 +144,31 @@ function renderFoodLabelResult(analysis) {
     }
 
     foodLabelResult.hidden = false;
+    foodLabelResult.classList.remove('is-revealed');
+    requestAnimationFrame(() => foodLabelResult.classList.add('is-revealed'));
+}
+
+function startLoadingStepProgress(steps) {
+    const items = Array.from(steps.querySelectorAll('li'));
+    let currentStep = 0;
+
+    loadingStepTimer = window.setInterval(() => {
+        items[currentStep]?.classList.remove('is-current');
+        items[currentStep]?.classList.add('is-done');
+        currentStep = Math.min(currentStep + 1, items.length - 1);
+        items[currentStep]?.classList.add('is-current');
+
+        if (currentStep === items.length - 1) {
+            clearLoadingStepTimer();
+        }
+    }, 900);
+}
+
+function clearLoadingStepTimer() {
+    if (loadingStepTimer !== null) {
+        window.clearInterval(loadingStepTimer);
+        loadingStepTimer = null;
+    }
 }
 
 function createResultHeader(grade, scoreText) {

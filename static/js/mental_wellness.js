@@ -110,8 +110,9 @@ function renderWellnessDetail(topic, selectedButton) {
         button.classList.toggle('is-selected', button === selectedButton);
     });
 
+    wellnessDetail.classList.remove('is-revealed');
     wellnessDetail.innerHTML = `
-        <article class="detail-card wellness-detail-card">
+        <article class="detail-card wellness-detail-card detail-card-animated">
             <div class="detail-card-header">
                 <span class="detail-icon">${wellnessIconMarkup(topic.iconId)}</span>
                 <div>
@@ -136,6 +137,7 @@ function renderWellnessDetail(topic, selectedButton) {
             </section>
         </article>
     `;
+    requestAnimationFrame(() => wellnessDetail.classList.add('is-revealed'));
 }
 
 function createWellnessList(title, items) {

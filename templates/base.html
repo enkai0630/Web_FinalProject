@@ -19,19 +19,19 @@
     </a>
 
     <nav class="site-nav" aria-label="主要功能">
-        <a class="{{ 'is-active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}">
+        <a class="{{ 'is-active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}" {% if active_page == 'home' %}aria-current="page"{% endif %}>
             <svg><use href="#icon-message"></use></svg>
             <span>AI 對話</span>
         </a>
-        <a class="{{ 'is-active' if active_page == 'label' else '' }}" href="{{ url_for('food_label_page') }}">
+        <a class="{{ 'is-active' if active_page == 'label' else '' }}" href="{{ url_for('food_label_page') }}" {% if active_page == 'label' %}aria-current="page"{% endif %}>
             <svg><use href="#icon-scan"></use></svg>
             <span>標示分析</span>
         </a>
-        <a class="{{ 'is-active' if active_page == 'knowledge' else '' }}" href="{{ url_for('food_safety_knowledge_page') }}">
+        <a class="{{ 'is-active' if active_page == 'knowledge' else '' }}" href="{{ url_for('food_safety_knowledge_page') }}" {% if active_page == 'knowledge' %}aria-current="page"{% endif %}>
             <svg><use href="#icon-book"></use></svg>
             <span>食安知識</span>
         </a>
-        <a class="{{ 'is-active' if active_page == 'wellness' else '' }}" href="{{ url_for('mental_wellness_page') }}">
+        <a class="{{ 'is-active' if active_page == 'wellness' else '' }}" href="{{ url_for('mental_wellness_page') }}" {% if active_page == 'wellness' %}aria-current="page"{% endif %}>
             <svg><use href="#icon-heartbeat"></use></svg>
             <span>心靈補給</span>
         </a>
