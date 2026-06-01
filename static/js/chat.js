@@ -7,11 +7,18 @@ const sentimentScore = document.querySelector('.sentiment-score');
 const keywordList = document.querySelector('.keyword-list');
 const suggestionList = document.querySelector('.suggestion-list');
 const promptCards = document.querySelectorAll('.prompt-card[data-prompt]');
+const chatToolSection = document.getElementById('chat-tool');
+const chatWorkspace = document.querySelector('.chat-workspace');
 
 chatForm.addEventListener('submit', handleSend);
 promptCards.forEach((card) => {
     card.addEventListener('click', () => {
         chatInput.value = card.dataset.prompt || '';
+        promptCards.forEach((item) => item.classList.toggle('is-selected', item === card));
+        chatToolSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        chatWorkspace?.classList.remove('is-highlighted');
+        window.setTimeout(() => chatWorkspace?.classList.add('is-highlighted'), 120);
+        window.setTimeout(() => chatWorkspace?.classList.remove('is-highlighted'), 1300);
         chatInput.focus();
     });
 });

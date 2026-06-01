@@ -142,8 +142,9 @@ function renderDetail(topic, selectedButton) {
         button.classList.toggle('is-selected', button === selectedButton);
     });
 
+    knowledgeDetail.classList.remove('is-revealed');
     knowledgeDetail.innerHTML = `
-        <article class="detail-card">
+        <article class="detail-card detail-card-animated">
             <div class="detail-card-header">
                 <span class="detail-icon">${iconMarkup(topic.iconId)}</span>
                 <div>
@@ -168,6 +169,7 @@ function renderDetail(topic, selectedButton) {
             </a>
         </article>
     `;
+    requestAnimationFrame(() => knowledgeDetail.classList.add('is-revealed'));
 }
 
 function createDetailList(title, items) {
