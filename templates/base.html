@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}食品安全 AI{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+{% include "_icons.html" %}
+
+<header class="site-header">
+    <a class="site-brand" href="{{ url_for('home') }}" aria-label="食品安全 AI 首頁">
+        <span class="brand-emblem"><svg><use href="#icon-leaf"></use></svg></span>
+        <span>
+            <strong>食品安全 AI</strong>
+            <small>Food Safety Intelligence</small>
+        </span>
+    </a>
+
+    <nav class="site-nav" aria-label="主要功能">
+        <a class="{{ 'is-active' if active_page == 'home' else '' }}" href="{{ url_for('home') }}">
+            <svg><use href="#icon-message"></use></svg>
+            <span>AI 對話</span>
+        </a>
+        <a class="{{ 'is-active' if active_page == 'label' else '' }}" href="{{ url_for('food_label_page') }}">
+            <svg><use href="#icon-scan"></use></svg>
+            <span>標示分析</span>
+        </a>
+        <a class="{{ 'is-active' if active_page == 'knowledge' else '' }}" href="{{ url_for('food_safety_knowledge_page') }}">
+            <svg><use href="#icon-book"></use></svg>
+            <span>食安知識</span>
+        </a>
+        <a class="{{ 'is-active' if active_page == 'wellness' else '' }}" href="{{ url_for('mental_wellness_page') }}">
+            <svg><use href="#icon-heartbeat"></use></svg>
+            <span>心靈補給</span>
+        </a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+    <div>
+        <strong>食品安全 AI</strong>
+        <p>結合 AI 對話、OCR 與食品標示分析，協助使用者更快理解日常飲食風險。</p>
+    </div>
+    <div class="footer-links">
+        <a href="{{ url_for('home') }}">AI 對話</a>
+        <a href="{{ url_for('food_label_page') }}">食品標示分析</a>
+        <a href="{{ url_for('food_safety_knowledge_page') }}">食品安全知識</a>
+        <a href="{{ url_for('mental_wellness_page') }}">身心健康小知識</a>
+    </div>
+</footer>
+
+{% block scripts %}{% endblock %}
+</body>
+</html>

@@ -69,6 +69,11 @@ def food_safety_knowledge_page():
     return render_template("food_safety_knowledge.html")
 
 
+@app.route("/mental-wellness")
+def mental_wellness_page():
+    return render_template("mental_wellness.html")
+
+
 @app.route("/api/chat", methods=["POST"])
 def chat():
     try:
