@@ -60,6 +60,18 @@ svg {
     overflow: hidden;
 }
 
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
 .site-header {
     position: sticky;
     top: 0;
@@ -124,6 +136,39 @@ svg {
 
 .site-nav {
     gap: 6px;
+}
+
+.mobile-nav-toggle {
+    display: none;
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.72);
+    color: var(--primary-dark);
+    cursor: pointer;
+}
+
+.mobile-nav-toggle span:not(.sr-only) {
+    display: block;
+    width: 18px;
+    height: 2px;
+    margin: 4px auto;
+    border-radius: 999px;
+    background: currentColor;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+
+.mobile-nav-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
 }
 
 .site-nav a {
@@ -546,6 +591,67 @@ main {
     color: var(--muted);
 }
 
+.section-heading-row {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(260px, 0.55fr);
+    gap: 28px;
+    align-items: end;
+}
+
+.flow-section,
+.faq-section {
+    padding: clamp(34px, 6vw, 72px) clamp(20px, 6vw, 86px);
+}
+
+.flow-section {
+    background: var(--surface);
+}
+
+.flow-track {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--line);
+}
+
+.flow-card {
+    min-height: 230px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: clamp(22px, 3vw, 34px);
+    background: var(--surface-muted);
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.flow-card:hover {
+    transform: translateY(-4px);
+    background: #fff;
+}
+
+.flow-card span {
+    color: var(--accent);
+    font-size: 0.78rem;
+    font-weight: 900;
+}
+
+.flow-card h3 {
+    margin: 0;
+    color: var(--primary-dark);
+    font-size: 1.25rem;
+    line-height: 1.2;
+}
+
+.flow-card p {
+    margin: 0;
+    color: var(--muted);
+}
+
 .chat-shell,
 .ask-shell,
 .analyzer-layout,
@@ -562,6 +668,77 @@ main {
 
 .ask-shell {
     grid-template-columns: minmax(280px, 390px) minmax(0, 1fr);
+}
+
+.faq-section {
+    background: var(--bg);
+}
+
+.faq-list {
+    display: grid;
+    gap: 10px;
+    max-width: 980px;
+}
+
+.faq-item {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.68);
+    transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s ease;
+}
+
+.faq-item:hover {
+    transform: translateY(-2px);
+    border-color: rgba(47, 111, 94, 0.26);
+    background: #fff;
+}
+
+.faq-item[open] {
+    border-color: rgba(47, 111, 94, 0.34);
+    background: #fff;
+}
+
+.faq-item summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 22px;
+    color: var(--primary-dark);
+    font-weight: 900;
+    cursor: pointer;
+    list-style: none;
+}
+
+.faq-item summary::-webkit-details-marker {
+    display: none;
+}
+
+.faq-item summary::after {
+    content: "+";
+    width: 26px;
+    height: 26px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--primary);
+    font-weight: 700;
+    transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.faq-item[open] summary::after {
+    transform: rotate(45deg);
+    background: var(--primary-soft);
+}
+
+.faq-item p {
+    margin: 0;
+    padding: 0 22px 22px;
+    color: var(--muted);
+    animation: detailFadeIn 0.24s ease both;
 }
 
 .prompt-board {
@@ -639,7 +816,7 @@ main {
 }
 
 .chat-workspace-compact {
-    min-height: 698px;
+    min-height: 560px;
 }
 
 .chat-workspace-compact .chat-messages {
@@ -1440,6 +1617,7 @@ main {
     .hero-compact,
     .chat-shell,
     .ask-shell,
+    .section-heading-row,
     .top-info-grid,
     .analyzer-layout,
     .knowledge-layout {
@@ -1459,6 +1637,7 @@ main {
     }
 
     .feature-band,
+    .flow-track,
     .wellness-marquee {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -1470,26 +1649,52 @@ main {
     }
 
     .site-header {
-        position: static;
-        align-items: stretch;
-        flex-direction: column;
+        position: sticky;
+        align-items: center;
+        flex-direction: row;
         padding: 14px;
     }
 
+    .mobile-nav-toggle {
+        display: inline-block;
+        margin-left: auto;
+    }
+
     .site-nav {
+        position: fixed;
+        top: 74px;
+        left: 14px;
+        right: 14px;
+        z-index: 60;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 6px;
+        grid-template-columns: 1fr;
+        gap: 4px;
+        padding: 10px;
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: var(--shadow);
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-8px);
+        transition: opacity 0.18s ease, transform 0.18s ease;
+        backdrop-filter: blur(18px);
+    }
+
+    .site-nav.is-open {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
     }
 
     .site-nav a {
-        justify-content: center;
-        padding: 10px 8px;
-        font-size: 0.84rem;
+        justify-content: flex-start;
+        padding: 12px;
+        font-size: 0.94rem;
     }
 
     .site-nav svg {
-        display: none;
+        display: inline-block;
     }
 
     .hero,
@@ -1523,8 +1728,10 @@ main {
     }
 
     .top-info-section,
+    .flow-section,
     .tool-section,
-    .resource-section {
+    .resource-section,
+    .faq-section {
         padding: 34px 18px;
     }
 
@@ -1535,6 +1742,14 @@ main {
 
     .top-info-feature {
         min-height: 260px;
+    }
+
+    .flow-track {
+        grid-template-columns: 1fr;
+    }
+
+    .flow-card {
+        min-height: 180px;
     }
 
     .chat-message {
@@ -1567,8 +1782,8 @@ main {
 
 @media (max-width: 420px) {
     .site-nav a span {
-        white-space: nowrap;
-        font-size: 0.78rem;
+        white-space: normal;
+        font-size: 0.9rem;
     }
 
     .hero-actions {
