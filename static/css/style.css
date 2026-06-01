@@ -20,15 +20,18 @@ body {
     radial-gradient(circle at top left, rgba(47,125,104,0.15), transparent 30%),
     radial-gradient(circle at bottom right, rgba(244,184,96,0.15), transparent 30%),
     #eef4f0;
+
     color: var(--color-text);
-    height: 100vh;
+
+    min-height: 100vh;
+
     transition: background 1s ease;
 }
 
 .chat-app {
     display: grid;
     grid-template-columns: 200px 1fr 250px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -99,8 +102,13 @@ body {
     margin: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    overflow: hidden;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-bottom: 80px;
 }
+
 .chat-header {
     background: linear-gradient(135deg, #2f7d68, #4ca88f) !important;
     color: white;
@@ -659,12 +667,13 @@ body {
 .knowledge-layout {
     display: grid;
     grid-template-columns: minmax(360px, 1fr) minmax(300px, 420px);
-    gap: 24px;
-    min-height: 0;
-    padding: 24px;
-    overflow: auto;
-}
 
+    gap: 24px;
+
+    padding: 24px;
+
+    overflow: visible;
+}
 .bubble-stage {
 
     position: relative;
@@ -1356,4 +1365,209 @@ body {
         );
 
     color:white;
+}/* ===== 食品安全知識卡片區 ===== */
+
+.knowledge-info-section {
+
+    margin-top: 50px;
+
+    padding: 30px;
+}
+
+.knowledge-info-section h2 {
+
+    margin-bottom: 25px;
+
+    font-size: 2rem;
+
+    color: var(--color-primary);
+}
+
+/* 卡片網格 */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12, 1fr);
+
+    gap: 28px;
+}
+.card-large {
+
+    grid-column: span 6;
+
+    min-height: 320px;
+}
+
+.card-wide {
+
+    grid-column: span 6;
+
+    min-height: 280px;
+}
+
+/* 單一卡片 */
+.info-card {
+    grid-column: span 3;
+
+    position: relative;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    min-height: 220px;
+
+    padding: 30px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,.55);
+
+    backdrop-filter:
+        blur(30px);
+
+    -webkit-backdrop-filter:
+        blur(30px);
+
+    border:
+        1px solid rgba(255,255,255,.6);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+
+    box-shadow:
+        0 20px 50px rgba(31,38,135,.12);
+
+    transform-style:
+        preserve-3d;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.info-card:hover {
+
+    transform:
+        translateY(-12px)
+        scale(1.03);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.15);
+}
+
+.info-card:hover::before {
+
+    opacity: 1;
+}
+
+.info-card:hover::after {
+
+    opacity: 1;
+}
+
+/* icon */
+
+.card-icon {
+
+    font-size: 3.2rem;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform .5s ease;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.info-card:hover .card-icon {
+
+    transform:
+        rotate(10deg)
+        scale(1.25);
+}
+.info-card:hover .card-icon {
+
+    transform:
+        scale(1.2)
+        rotate(10deg);
+}
+
+.info-card h3 {
+
+    margin-bottom: 15px;
+
+    color: var(--color-primary);
+}
+
+.info-card p {
+
+    line-height: 1.8;
+}
+.info-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(76,168,143,.12),
+            rgba(244,184,96,.12)
+        );
+
+    opacity: 0;
+
+    transition: .4s ease;
+}
+.info-card::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 250px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.5),
+            transparent 70%
+        );
+
+    left: var(--mouse-x);
+
+    top: var(--mouse-y);
+
+    transform:
+        translate(-50%,-50%);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease;
+}
+.info-card h3,
+.info-card p {
+
+    text-decoration: none;
+
+    color: inherit;
 }
