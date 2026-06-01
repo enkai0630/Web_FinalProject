@@ -4,6 +4,7 @@ const foodLabelPreview = document.getElementById('food-label-preview');
 const foodLabelStatus = document.getElementById('food-label-status');
 const foodLabelResult = document.getElementById('food-label-result');
 const analyzeButton = foodLabelForm.querySelector('.analyze-button');
+const analyzeButtonText = analyzeButton.querySelector('span');
 
 foodLabelForm.addEventListener('submit', handleFoodLabelAnalyze);
 foodLabelInput.addEventListener('change', handleFoodLabelPreview);
@@ -70,7 +71,7 @@ async function handleFoodLabelAnalyze(e) {
 function setAnalyzing(isAnalyzing) {
     foodLabelInput.disabled = isAnalyzing;
     analyzeButton.disabled = isAnalyzing;
-    analyzeButton.textContent = isAnalyzing ? '分析中...' : '開始分析健康程度';
+    analyzeButtonText.textContent = isAnalyzing ? '分析中...' : '開始分析健康程度';
 }
 
 function showFoodAnalysisLoading(filename) {

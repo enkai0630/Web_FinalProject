@@ -6,9 +6,16 @@ const sentimentBadge = document.querySelector('.sentiment-badge');
 const sentimentScore = document.querySelector('.sentiment-score');
 const keywordList = document.querySelector('.keyword-list');
 const suggestionList = document.querySelector('.suggestion-list');
+const promptCards = document.querySelectorAll('.prompt-card[data-prompt]');
 
 chatForm.addEventListener('submit', handleSend);
-updateStatusText('待命中', 'var(--color-accent)');
+promptCards.forEach((card) => {
+    card.addEventListener('click', () => {
+        chatInput.value = card.dataset.prompt || '';
+        chatInput.focus();
+    });
+});
+updateStatusText('待命中', 'var(--accent)');
 
 async function handleSend(e) {
     e.preventDefault();
@@ -21,7 +28,7 @@ async function handleSend(e) {
     const loadingElement = showLoading();
 
     try {
-        updateStatusText('分析中...', 'var(--color-accent)');
+        updateStatusText('分析中...', 'var(--accent)');
 
         const response = await fetch('/api/chat', {
             method: 'POST',
@@ -44,7 +51,7 @@ async function handleSend(e) {
     } catch (error) {
         removeLoading(loadingElement);
         appendMessage('ai', error.message || '發生未知錯誤，請稍後再試。');
-        updateStatusText('發生錯誤', 'var(--color-danger-soft)');
+        updateStatusText('發生錯誤', 'var(--danger-soft)');
     }
 }
 
@@ -54,7 +61,7 @@ function appendMessage(sender, text, analysis = null) {
 
     const avatar = document.createElement('div');
     avatar.className = 'message-avatar';
-    avatar.textContent = sender === 'ai' ? 'AI' : '你';
+    avatar.textContent = sender === 'ai' ? '食' : '你';
 
     const content = document.createElement('div');
     content.className = 'message-content';
@@ -80,14 +87,14 @@ function showLoading() {
 
     const avatar = document.createElement('div');
     avatar.className = 'message-avatar';
-    avatar.textContent = 'AI';
+    avatar.textContent = '食';
 
     const content = document.createElement('div');
     content.className = 'message-content';
 
     const textP = document.createElement('p');
     textP.className = 'loading-dots';
-    textP.textContent = '思考中';
+    textP.textContent = '整理中';
     content.appendChild(textP);
 
     messageDiv.appendChild(avatar);
@@ -110,7 +117,7 @@ function typeWriterEffect(text, analysis = null) {
 
     const avatar = document.createElement('div');
     avatar.className = 'message-avatar';
-    avatar.textContent = 'AI';
+    avatar.textContent = '食';
 
     const content = document.createElement('div');
     content.className = 'message-content';
@@ -144,7 +151,7 @@ function typeWriterEffect(text, analysis = null) {
 function createSentimentBadge(analysis) {
     const badge = document.createElement('span');
     badge.className = 'sentiment-badge';
-    badge.textContent = `情緒：${analysis.sentiment}`;
+    badge.textContent = `狀態：${analysis.sentiment}`;
     return badge;
 }
 
@@ -160,14 +167,14 @@ function createMessageMeta() {
 
 function updateStatus(analysis) {
     if (!analysis) {
-        updateStatusText('待命中', 'var(--color-accent)');
+        updateStatusText('待命中', 'var(--accent)');
         return;
     }
 
     const label = analysis.mode === 'negative' ? '情緒支持模式' : '食品安全模式';
     updateStatusText(
         `目前：${label}`,
-        analysis.mode === 'negative' ? 'var(--color-danger-soft)' : 'var(--color-primary-soft)'
+        analysis.mode === 'negative' ? 'var(--danger-soft)' : 'var(--primary-soft)'
     );
 }
 
@@ -208,11 +215,11 @@ function renderList(listElement, items) {
 
 function updateBackground(analysis) {
     if (analysis?.mode === 'negative') {
-        document.body.style.background = 'var(--color-danger-soft)';
+        document.body.style.background = 'var(--danger-soft)';
     } else if (Number(analysis?.score) > 0.85) {
-        document.body.style.background = 'var(--color-primary-soft)';
+        document.body.style.background = 'var(--primary-soft)';
     } else {
-        document.body.style.background = 'var(--color-bg)';
+        document.body.style.background = 'var(--bg)';
     }
 }
 

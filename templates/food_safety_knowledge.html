@@ -1,117 +1,71 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>食品安全知識｜食品安全 AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
+{% extends "base.html" %}
+{% set active_page = "knowledge" %}
 
-<div class="chat-app food-page-app knowledge-page-app">
-    <aside class="sidebar">
-        <div class="brand">
-            <span class="brand-mark">食</span>
-            <div>
-                <strong>食品安全 AI</strong>
-                <small>心情陪伴與食品安全工具</small>
+{% block title %}食品安全知識｜食品安全 AI{% endblock %}
+
+{% block content %}
+<section class="hero hero-compact">
+    <div class="hero-copy">
+        <p class="eyebrow">Food Safety Knowledge</p>
+        <h1>用主題卡片理解食安事件背後的風險。</h1>
+        <p class="hero-lead">把新聞、食品類型、健康影響與生活提醒整理在同一個頁面，適合快速複習或作為專題展示內容。</p>
+    </div>
+    <div class="hero-note">
+        <svg><use href="#icon-book"></use></svg>
+        <span>點選下方主題卡片即可查看更完整的風險說明。</span>
+    </div>
+</section>
+
+<section class="tool-section">
+    <div class="section-heading">
+        <p class="eyebrow">Topics</p>
+        <h2>食品安全主題</h2>
+        <p>從常見事件與成分風險開始，建立判斷食品安全問題的基本框架。</p>
+    </div>
+
+    <div class="knowledge-layout">
+        <div class="topic-grid" id="topic-grid" aria-label="食品安全主題列表"></div>
+
+        <aside class="knowledge-detail" id="knowledge-detail" aria-live="polite">
+            <div class="detail-empty">
+                <svg><use href="#icon-arrow-right"></use></svg>
+                <h2>選擇一個主題</h2>
+                <p>查看可能出現的食品、人體風險、日常提醒與參考來源。</p>
             </div>
-        </div>
-        <nav class="nav" aria-label="主要功能">
-            <ul>
-                <li class="nav-item"><a href="{{ url_for('home') }}">AI 對話</a></li>
-                <li class="nav-item"><a href="{{ url_for('food_label_page') }}">食品標示分析</a></li>
-                <li class="nav-item active"><a href="{{ url_for('food_safety_knowledge_page') }}">食品安全知識</a></li>
-                <li class="nav-item"><a href="#">設定</a></li>
-            </ul>
-        </nav>
-    </aside>
+        </aside>
+    </div>
+</section>
 
-    <main class="main-content page-content">
-        <header class="chat-header">
-            <div>
-                <p class="eyebrow">Food Safety Knowledge</p>
-                <h1>食品安全知識</h1>
-            </div>
-            <div class="status-panel">
-                <span class="status-badge">新聞科普</span>
-            </div>
-        </header>
+<section class="resource-section">
+    <div class="section-heading">
+        <p class="eyebrow">References</p>
+        <h2>延伸科普資料</h2>
+    </div>
+    <div class="resource-grid">
+        <a href="https://msn.sgs.com/Knowledge/FOOD/3673" target="_blank" rel="noopener noreferrer">
+            <svg><use href="#icon-alert-triangle"></use></svg>
+            <span>蘇丹紅</span>
+            <p>工業染料與食品違法添加的基本認識。</p>
+        </a>
+        <a href="https://www.cha.gov.tw/cp-263-2707-b306d-1.html" target="_blank" rel="noopener noreferrer">
+            <svg><use href="#icon-flask"></use></svg>
+            <span>三聚氰胺</span>
+            <p>奶粉事件與非法摻偽物的風險背景。</p>
+        </a>
+        <a href="https://www.fda.gov.tw/TC/sitecontent.aspx?sid=1953" target="_blank" rel="noopener noreferrer">
+            <svg><use href="#icon-bacteria"></use></svg>
+            <span>李斯特菌</span>
+            <p>冷藏即食食品常見病原菌與預防方式。</p>
+        </a>
+        <a href="https://www.cfs.gov.hk/tc_chi/multimedia/multimedia_pub/multimedia_pub_fsf_213_01.html" target="_blank" rel="noopener noreferrer">
+            <svg><use href="#icon-heartbeat"></use></svg>
+            <span>米酵菌酸</span>
+            <p>保存不當澱粉類食品可能帶來的嚴重風險。</p>
+        </a>
+    </div>
+</section>
+{% endblock %}
 
-        <section class="knowledge-layout">
-            <div class="bubble-stage" id="bubble-stage" aria-label="食品安全新聞與物質主題"></div>
-
-            <aside class="knowledge-detail" id="knowledge-detail" aria-live="polite">
-                <div class="detail-empty">
-                    <span class="detail-empty-icon">?</span>
-                    <h2>點選一個泡泡</h2>
-                    <p>查看食品安全事件、可能出現的食品、人體風險與日常提醒。</p>
-                </div>
-            </aside>
-        </section>
-
-        <!-- 新增開始 -->
-
-        <section class="knowledge-info-section">
-
-            <h2>熱門食品安全議題</h2>
-            <h7>(若有想更近一步了解的，可以點擊並觀看科普資料喔)</h7>
-        
-            <div class="info-grid">
-        
-                <a
-                    href="https://msn.sgs.com/Knowledge/FOOD/3673"
-                    target="_blank"
-                    class="info-card reveal card-large">
-        
-                    <div class="card-icon">🌶</div>
-                    <h3>蘇丹紅</h3>
-                    <p>工業染料，不可添加於食品中。</p>
-        
-                </a>
-        
-                <a
-                    href="https://www.cha.gov.tw/cp-263-2707-b306d-1.html"
-                    target="_blank"
-                    class="info-card reveal">
-        
-                    <div class="card-icon">🥛</div>
-                    <h3>三聚氰胺</h3>
-                    <p>曾造成全球奶粉食安事件。</p>
-        
-                </a>
-        
-                <a
-                    href="https://www.fda.gov.tw/TC/sitecontent.aspx?sid=1953"
-                    target="_blank"
-                    class="info-card reveal">
-        
-                    <div class="card-icon">🦠</div>
-                    <h3>李斯特菌</h3>
-                    <p>冷藏環境中仍可存活的病原菌。</p>
-        
-                </a>
-        
-                <a
-                    href="https://www.cfs.gov.hk/tc_chi/multimedia/multimedia_pub/multimedia_pub_fsf_213_01.html"
-                    target="_blank"
-                    class="info-card reveal card-wide">
-        
-                    <div class="card-icon">☠️</div>
-                    <h3>米酵菌酸</h3>
-                    <p>寶林茶室事件的重要毒素來源。</p>
-        
-                </a>
-        
-            </div>
-        
-        </section>
-        <!-- 新增結束 -->
-
-    </main>
-</div>
-
+{% block scripts %}
 <script src="{{ url_for('static', filename='js/food_safety_knowledge.js') }}" defer></script>
-
-</body>
-</html>
+{% endblock %}

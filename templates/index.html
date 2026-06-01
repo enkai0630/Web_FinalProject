@@ -1,120 +1,176 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>心情與食品安全 AI 助手</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="intro-screen" id="intro-screen">
-        <div class="intro-glow"></div>
-    
-        <div class="intro-content">
-            <div class="intro-logo">食</div>
-    
-            <h1>食品安全 AI</h1>
-    
-            <p>Nutrition Intelligence System</p>
-    
-            <div class="intro-loader">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+{% extends "base.html" %}
+{% set active_page = "home" %}
+
+{% block title %}食品安全 AI｜心情與食安助理{% endblock %}
+
+{% block content %}
+<section class="hero hero-home">
+    <div class="hero-copy">
+        <p class="eyebrow">Mind and Food Safety Assistant</p>
+        <h1>把食品標示、食安新聞與日常疑問整理成看得懂的答案。</h1>
+        <p class="hero-lead">這是一個以 Flask 製作的食品安全 AI 專案，保留聊天陪伴，也提供營養標示圖片分析與食安知識整理。</p>
+        <div class="hero-actions">
+            <a class="button button-primary" href="#chat-tool">開始詢問</a>
+            <a class="button button-secondary" href="{{ url_for('food_label_page') }}">分析食品標示</a>
         </div>
     </div>
-<div class="chat-app">
-    <aside class="sidebar">
-        <div class="brand">
-            <span class="brand-mark">食</span>
-            <div>
-                <strong>食品安全 AI</strong>
-                <small>心情陪伴與食品安全工具</small>
-            </div>
-        </div>
-        <nav class="nav" aria-label="主要功能">
-            <ul>
-                <li class="nav-item active"><a href="{{ url_for('home') }}">AI 對話</a></li>
-                <li class="nav-item"><a href="{{ url_for('food_label_page') }}">食品標示分析</a></li>
-                <li class="nav-item"><a href="{{ url_for('food_safety_knowledge_page') }}">食品安全知識</a></li>
-                <li class="nav-item"><a href="#">設定</a></li>
+    <div class="hero-visual reminder-board" aria-label="身心食安提醒">
+        <article class="reminder-card reminder-card-primary">
+            <p class="panel-kicker">Daily Check-in</p>
+            <h2>今天吃東西前，先問自己三件事。</h2>
+            <ul class="reminder-list">
+                <li>我現在是真的餓，還是只是壓力很大？</li>
+                <li>這份食物的糖、鈉、油脂會不會太集中？</li>
+                <li>如果標示看不懂，有沒有更清楚的替代選擇？</li>
             </ul>
-        </nav>
-    </aside>
+        </article>
+        <article class="reminder-card reminder-card-soft">
+            <svg><use href="#icon-heartbeat"></use></svg>
+            <p>飲食選擇不只看營養數字，也和心情、作息與頻率有關。</p>
+        </article>
+    </div>
+</section>
 
-    <main class="main-content">
-        <header class="chat-header">
+<section class="top-info-section" aria-label="今日食安提醒">
+    <div class="section-heading">
+        <p class="eyebrow">TOP INFORMATION</p>
+        <h2>今日食安提醒</h2>
+    </div>
+    <div class="top-info-grid">
+        <article class="top-info-feature">
+            <span class="info-type">TODAY'S NOTE</span>
+            <h3>先看「頻率」和「份量」，再判斷一項食品能不能吃。</h3>
+            <p>單次吃到高糖或高鈉食品不一定代表完全不健康，但如果變成每天固定攝取，就會逐漸變成身體負擔。</p>
+            <a href="{{ url_for('food_label_page') }}">檢查食品標示 <svg><use href="#icon-arrow-right"></use></svg></a>
+        </article>
+        <div class="top-info-list">
+            <a href="{{ url_for('food_safety_knowledge_page') }}">
+                <time>GUIDE</time>
+                <span>看懂糖、鈉、脂肪與成分排序</span>
+            </a>
+            <a href="{{ url_for('food_safety_knowledge_page') }}">
+                <time>KNOWLEDGE</time>
+                <span>從食安事件學會辨識高風險食品</span>
+            </a>
+            <a href="{{ url_for('mental_wellness_page') }}">
+                <time>WELLNESS</time>
+                <span>壓力大時，先把飲食選擇降到簡單可執行</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="feature-band" aria-label="主要功能">
+    <a class="feature-card feature-card-primary" href="{{ url_for('food_label_page') }}">
+        <svg><use href="#icon-scan"></use></svg>
+        <small>CHECK</small>
+        <span>食品標示分析</span>
+        <p>上傳食品標示圖片，透過 OCR 與 AI 產生健康程度、理由與建議。</p>
+    </a>
+    <a class="feature-card" href="{{ url_for('food_safety_knowledge_page') }}">
+        <svg><use href="#icon-book"></use></svg>
+        <small>KNOWLEDGE</small>
+        <span>食品安全知識</span>
+        <p>用主題卡片快速理解蘇丹紅、米酵菌酸、李斯特菌等食安事件。</p>
+    </a>
+    <a class="feature-card" href="{{ url_for('mental_wellness_page') }}">
+        <svg><use href="#icon-heartbeat"></use></svg>
+        <small>WELLNESS</small>
+        <span>心靈補給</span>
+        <p>整理壓力大時能立刻做的小步驟，也補充睡眠、情緒與身心健康知識。</p>
+    </a>
+    <a class="feature-card feature-card-quiet" href="#chat-tool">
+        <svg><use href="#icon-message"></use></svg>
+        <small>ASK</small>
+        <span>日常諮詢</span>
+        <p>用平常說話的方式詢問食品標示、食安風險與飲食選擇。</p>
+    </a>
+</section>
+
+<section class="tool-section ask-section" id="chat-tool">
+    <div class="section-heading">
+        <p class="eyebrow">ASK</p>
+        <h2>需要時，再打開對話。</h2>
+        <p>這裡不是要取代你的判斷，而是幫你把食品標示、食安風險與當下狀態整理得更清楚。</p>
+    </div>
+
+    <div class="ask-shell">
+        <aside class="prompt-board" aria-label="建議提問">
             <div>
-                <p class="eyebrow">Mind and Food Safety Assistant</p>
-                <h1>心情與食品安全 AI 助手</h1>
+                <p class="eyebrow">Try Asking</p>
+                <h3>可以先從這些問題開始</h3>
             </div>
-            <div class="status-panel">
+            <button type="button" class="prompt-card" data-prompt="這個食品標示要怎麼看才知道健不健康？">
+                <span>01</span>
+                <strong>這個食品標示要怎麼看？</strong>
+            </button>
+            <button type="button" class="prompt-card" data-prompt="壓力大時很想吃甜食，有沒有比較不傷身的選擇？">
+                <span>02</span>
+                <strong>壓力大時想吃甜食怎麼辦？</strong>
+            </button>
+            <button type="button" class="prompt-card" data-prompt="高鈉食品會對身體造成什麼影響？">
+                <span>03</span>
+                <strong>高鈉食品會有什麼影響？</strong>
+            </button>
+            <div class="insight-panel insight-panel-compact" aria-label="對話分析資訊">
+                <article>
+                    <h3>狀態</h3>
+                    <div class="sentiment-display">
+                        <span class="sentiment-badge">尚未分析</span>
+                        <span class="sentiment-score">分數: --</span>
+                    </div>
+                </article>
+                <article>
+                    <h3>主題</h3>
+                    <ul class="keyword-list">
+                        <li>食品營養標示</li>
+                        <li>糖、鈉與脂肪</li>
+                        <li>食品添加物</li>
+                    </ul>
+                </article>
+            </div>
+        </aside>
+
+        <section class="chat-workspace chat-workspace-compact" aria-label="日常飲食與心情諮詢區">
+            <div class="chat-status">
+                <div class="chat-intro">
+                    <span class="chat-intro-mark"><svg><use href="#icon-leaf"></use></svg></span>
+                    <div>
+                        <strong>食安小幫手</strong>
+                        <small>可以問食品標示、食安風險，也可以先聊聊今天的狀態。</small>
+                    </div>
+                </div>
                 <span class="status-badge">待命中</span>
             </div>
-        </header>
 
-        <section class="chat-messages" id="chat-messages" aria-live="polite">
-            <div class="chat-message chat-message--ai">
-                <div class="message-avatar">AI</div>
-                <div class="message-content">
-                    <p>你好，我可以陪你聊天，也可以回答食品安全與營養標示相關問題。如果要上傳食品成分表圖片，請點左側「食品標示分析」。</p>
-                    <div class="message-meta">
-                        <time class="message-time">現在</time>
+            <div class="chat-messages" id="chat-messages" aria-live="polite">
+                <div class="chat-message chat-message--ai">
+                    <div class="message-avatar">食</div>
+                    <div class="message-content">
+                        <p>你好。你可以直接問我「這個食品標示怎麼看？」、「高鈉會有什麼影響？」或「今天壓力大時該怎麼選食物？」我會用比較好理解的方式幫你整理。</p>
+                        <div class="message-meta">
+                            <time class="message-time">現在</time>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <footer class="chat-form">
+                <form id="chat-form">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="輸入你的問題，例如：反式脂肪為什麼不健康？" required>
+                    <button type="submit" class="chat-submit">送出</button>
+                </form>
+            </footer>
         </section>
+        <ul class="suggestion-list chat-suggestion-buffer" aria-hidden="true">
+            <li>如何判斷一項食品是否太甜？</li>
+            <li>鈉含量高會對身體有什麼影響？</li>
+            <li>反式脂肪為什麼比較不健康？</li>
+        </ul>
+    </div>
+</section>
+{% endblock %}
 
-        <footer class="chat-form">
-            <form id="chat-form">
-                <input type="text" class="chat-input" id="chat-input" placeholder="輸入你的問題，例如：反式脂肪為什麼不健康？" required>
-                <button type="submit" class="chat-submit">送出</button>
-            </form>
-        </footer>
-    </main>
-
-    <aside class="info-panel">
-
-        <details open class="accordion">
-            <summary>情緒分析</summary>
-    
-            <div class="accordion-content">
-                <div class="sentiment-display">
-                    <span class="sentiment-badge">尚未分析</span>
-                    <span class="sentiment-score">分數: --</span>
-                </div>
-            </div>
-        </details>
-    
-        <details class="accordion">
-            <summary>關鍵主題</summary>
-    
-            <div class="accordion-content">
-                <ul class="keyword-list">
-                    <li>食品營養標示</li>
-                    <li>糖、鈉與脂肪</li>
-                    <li>食品添加物</li>
-                </ul>
-            </div>
-        </details>
-    
-        <details class="accordion">
-            <summary>建議提問</summary>
-    
-            <div class="accordion-content">
-                <ul class="suggestion-list">
-                    <li>如何判斷一項食品是否太甜？</li>
-                    <li>鈉含量高會對身體有什麼影響？</li>
-                    <li>反式脂肪為什麼比較不健康？</li>
-                </ul>
-            </div>
-        </details>
-    
-    </aside>
-</div>
-
+{% block scripts %}
 <script src="{{ url_for('static', filename='js/chat.js') }}" defer></script>
-
-</body>
-</html>
+{% endblock %}
