@@ -75,30 +75,42 @@
     </main>
 
     <aside class="info-panel">
-        <div class="info-section">
-            <h3>情緒分析</h3>
-            <div class="sentiment-display">
-                <span class="sentiment-badge">尚未分析</span>
-                <span class="sentiment-score">分數: --</span>
-            </div>
-        </div>
 
-        <div class="info-section">
-            <h3>關鍵主題</h3>
-            <ul class="keyword-list">
-                <li>食品營養標示</li>
-                <li>糖、鈉與脂肪</li>
-                <li>食品添加物</li>
-            </ul>
-        </div>
-        <div class="info-section">
-            <h3>建議提問</h3>
-            <ul class="suggestion-list">
-                <li>如何判斷一項食品是否太甜？</li>
-                <li>鈉含量高會對身體有什麼影響？</li>
-                <li>反式脂肪為什麼比較不健康？</li>
-            </ul>
-        </div>
+        <details open class="accordion">
+            <summary>情緒分析</summary>
+    
+            <div class="accordion-content">
+                <div class="sentiment-display">
+                    <span class="sentiment-badge">尚未分析</span>
+                    <span class="sentiment-score">分數: --</span>
+                </div>
+            </div>
+        </details>
+    
+        <details class="accordion">
+            <summary>關鍵主題</summary>
+    
+            <div class="accordion-content">
+                <ul class="keyword-list">
+                    <li>食品營養標示</li>
+                    <li>糖、鈉與脂肪</li>
+                    <li>食品添加物</li>
+                </ul>
+            </div>
+        </details>
+    
+        <details class="accordion">
+            <summary>建議提問</summary>
+    
+            <div class="accordion-content">
+                <ul class="suggestion-list">
+                    <li>如何判斷一項食品是否太甜？</li>
+                    <li>鈉含量高會對身體有什麼影響？</li>
+                    <li>反式脂肪為什麼比較不健康？</li>
+                </ul>
+            </div>
+        </details>
+    
     </aside>
 </div>
 
