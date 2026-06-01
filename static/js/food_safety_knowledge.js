@@ -85,26 +85,239 @@ const knowledgeTopics = [
         sourceName: 'AP News: China kindergarten lead poisoning',
         sourceUrl: 'https://apnews.com/article/26e13879806d4abe44c7dae892c191c0',
         tone: 'yellow'
+    },
+    {
+        id: 'trans-fat',
+        title: '反式脂肪',
+        icon: '🍟',
+        category: '不健康脂肪',
+        riskLevel: '高',
+        summary: '常見於油炸食品與酥皮點心。',
+        possibleFoods: ['洋芋片', '炸雞', '酥皮麵包', '餅乾'],
+        harm: '增加心血管疾病風險。',
+        reminder: '少吃油炸與加工食品。',
+        sourceName: 'WHO',
+        sourceUrl: 'https://www.who.int',
+        tone: 'red'
+    },
+    {
+        id: 'sugar',
+        title: '高糖飲食',
+        icon: '🍭',
+        category: '營養風險',
+        riskLevel: '中高',
+        summary: '過量糖分與肥胖及糖尿病相關。',
+        possibleFoods: ['手搖飲', '蛋糕', '糖果'],
+        harm: '增加代謝疾病風險。',
+        reminder: '選擇無糖或微糖飲品。',
+        sourceName: 'WHO',
+        sourceUrl: 'https://www.who.int',
+        tone: 'orange'
+    },
+    {
+        id: 'sodium',
+        title: '高鈉食品',
+        icon: '🧂',
+        category: '營養風險',
+        riskLevel: '中高',
+        summary: '現代人普遍鈉攝取過量。',
+        possibleFoods: ['泡麵', '醃漬食品', '加工肉品'],
+        harm: '提高高血壓風險。',
+        reminder: '注意營養標示中的鈉含量。',
+        sourceName: 'FDA',
+        sourceUrl: 'https://www.fda.gov',
+        tone: 'blue'
+    },
+    {
+        id: 'aspartame',
+        title: '阿斯巴甜',
+        icon: '🥤',
+        category: '甜味劑',
+        riskLevel: '低',
+        summary: '常見人工甜味劑。',
+        possibleFoods: ['零卡飲料', '代糖產品'],
+        harm: '一般攝取量下安全。',
+        reminder: '適量攝取即可。',
+        sourceName: 'WHO',
+        sourceUrl: 'https://www.who.int',
+        tone: 'green'
+    },
+    {
+        id: 'nitrite',
+        title: '亞硝酸鹽',
+        icon: '🌭',
+        category: '食品添加物',
+        riskLevel: '中',
+        summary: '加工肉品常見保色劑。',
+        possibleFoods: ['香腸', '培根', '火腿'],
+        harm: '過量攝取可能增加健康風險。',
+        reminder: '加工肉品不要天天吃。',
+        sourceName: 'WHO',
+        sourceUrl: 'https://www.who.int',
+        tone: 'purple'
+    },
+    {
+        id: 'coloring',
+        title: '人工色素',
+        icon: '🎨',
+        category: '食品添加物',
+        riskLevel: '中',
+        summary: '提供鮮豔顏色。',
+        possibleFoods: ['糖果', '果凍', '飲料'],
+        harm: '部分族群較敏感。',
+        reminder: '兒童食品要特別注意。',
+        sourceName: 'FDA',
+        sourceUrl: 'https://www.fda.gov',
+        tone: 'yellow'
+    },
+    {
+        id: 'instant-noodle',
+        title: '泡麵',
+        icon: '🍜',
+        category: '加工食品',
+        riskLevel: '中',
+        summary: '高鈉高熱量代表食品。',
+        possibleFoods: ['泡麵'],
+        harm: '長期大量食用不利健康。',
+        reminder: '減少喝湯。',
+        sourceName: 'FDA',
+        sourceUrl: 'https://www.fda.gov',
+        tone: 'orange'
+    },
+    {
+        id: 'chips',
+        title: '洋芋片',
+        icon: '🥔',
+        category: '零食',
+        riskLevel: '中',
+        summary: '高油脂高熱量。',
+        possibleFoods: ['洋芋片'],
+        harm: '容易熱量超標。',
+        reminder: '當零食偶爾吃即可。',
+        sourceName: 'FDA',
+        sourceUrl: 'https://www.fda.gov',
+        tone: 'red'
     }
 ];
 
 function renderBubbles() {
     bubbleStage.innerHTML = '';
 
-    knowledgeTopics.forEach((topic, index) => {
+    knowledgeTopics.slice(0, 8).forEach((topic) => {
+
         const button = document.createElement('button');
+
         button.type = 'button';
-        button.className = `knowledge-bubble knowledge-bubble--${topic.tone}`;
-        button.style.setProperty('--bubble-delay', `${index * -1.4}s`);
-        button.style.setProperty('--bubble-x', `${(index % 3) * 9 - 8}px`);
+
+        button.className =
+            `knowledge-bubble knowledge-bubble--${topic.tone}`;
+
         button.innerHTML = `
             <span class="bubble-icon">${topic.icon}</span>
             <span class="bubble-title">${topic.title}</span>
             <span class="bubble-risk">風險 ${topic.riskLevel}</span>
         `;
-        button.addEventListener('click', () => renderDetail(topic, button));
+
+        button.addEventListener(
+            'click',
+            () => renderDetail(topic, button)
+        );
+
         bubbleStage.appendChild(button);
     });
+}
+function startFloating() {
+
+    const bubbles =
+        document.querySelectorAll('.knowledge-bubble');
+
+    const stageRect =
+        bubbleStage.getBoundingClientRect();
+
+    const bubbleSize = 140;
+
+    const items = [];
+
+    bubbles.forEach((bubble) => {
+
+        items.push({
+
+            el: bubble,
+
+            x: Math.random() * (stageRect.width - bubbleSize),
+
+            y: Math.random() * (stageRect.height - bubbleSize),
+
+            vx: (Math.random() - 0.5) * 0.6,
+
+            vy: (Math.random() - 0.5) * 0.6,
+
+            size: bubbleSize
+        });
+    });
+
+    function update() {
+
+        items.forEach((a) => {
+
+            a.x += a.vx;
+            a.y += a.vy;
+
+            if (
+                a.x <= 0 ||
+                a.x >= stageRect.width - a.size
+            ) {
+                a.vx *= -1;
+            }
+
+            if (
+                a.y <= 0 ||
+                a.y >= stageRect.height - a.size
+            ) {
+                a.vy *= -1;
+            }
+        });
+
+        for (let i = 0; i < items.length; i++) {
+
+            for (let j = i + 1; j < items.length; j++) {
+
+                const a = items[i];
+                const b = items[j];
+
+                const dx = a.x - b.x;
+                const dy = a.y - b.y;
+
+                const distance =
+                    Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+
+                    const tempVx = a.vx;
+                    const tempVy = a.vy;
+
+                    a.vx = b.vx;
+                    a.vy = b.vy;
+
+                    b.vx = tempVx;
+                    b.vy = tempVy;
+                }
+            }
+        }
+
+        items.forEach((item) => {
+
+            item.el.style.left =
+                `${item.x}px`;
+
+            item.el.style.top =
+                `${item.y}px`;
+        });
+
+        requestAnimationFrame(update);
+    }
+
+    update();
 }
 
 function renderDetail(topic, selectedButton) {
@@ -150,3 +363,4 @@ function createDetailList(title, items) {
 }
 
 renderBubbles();
+startFloating();

@@ -20,15 +20,18 @@ body {
     radial-gradient(circle at top left, rgba(47,125,104,0.15), transparent 30%),
     radial-gradient(circle at bottom right, rgba(244,184,96,0.15), transparent 30%),
     #eef4f0;
+
     color: var(--color-text);
-    height: 100vh;
+
+    min-height: 100vh;
+
     transition: background 1s ease;
 }
 
 .chat-app {
     display: grid;
     grid-template-columns: 200px 1fr 250px;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .sidebar {
@@ -99,8 +102,13 @@ body {
     margin: 20px;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    overflow: hidden;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding-bottom: 80px;
 }
+
 .chat-header {
     background: linear-gradient(135deg, #2f7d68, #4ca88f) !important;
     color: white;
@@ -659,26 +667,39 @@ body {
 .knowledge-layout {
     display: grid;
     grid-template-columns: minmax(360px, 1fr) minmax(300px, 420px);
-    gap: 24px;
-    min-height: 0;
-    padding: 24px;
-    overflow: auto;
-}
 
+    gap: 24px;
+
+    padding: 24px;
+
+    overflow: visible;
+}
 .bubble-stage {
+
     position: relative;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(120px, 1fr));
-    align-content: center;
-    gap: 22px;
-    min-height: 560px;
-    padding: 28px;
-    border: 1px solid var(--color-primary-soft);
-    border-radius: 8px;
-    background:
-        radial-gradient(circle at 20% 20%, rgba(244, 184, 96, 0.24), transparent 26%),
-        linear-gradient(145deg, #fbfdfb 0%, #eef7f2 48%, #fff8e8 100%);
+
+    width: 100%;
+
+    height: 750px;
+
     overflow: hidden;
+
+    border-radius: 30px;
+
+    background:
+        radial-gradient(circle at top left,
+        rgba(76,168,143,.15),
+        transparent 25%),
+
+        radial-gradient(circle at bottom right,
+        rgba(244,184,96,.15),
+        transparent 25%),
+
+        linear-gradient(
+            135deg,
+            #f9fcfa,
+            #eef7f2
+        );
 }
 
 .bubble-stage::before {
@@ -691,27 +712,57 @@ body {
 }
 
 .knowledge-bubble {
-    position: relative;
-    z-index: 1;
-    width: min(156px, 100%);
-    aspect-ratio: 1;
-    justify-self: center;
-    border: 1px solid rgba(255, 255, 255, 0.78);
+
+    position: absolute;
+
+    width: 140px;
+
+    height: 140px;
+
     border-radius: 50%;
-    box-shadow: 0 14px 28px rgba(36, 48, 43, 0.14);
-    color: var(--color-text);
+
+    border: none;
+
     cursor: pointer;
+
     display: flex;
+
     flex-direction: column;
-    align-items: center;
+
     justify-content: center;
-    gap: 6px;
-    padding: 18px;
+
+    align-items: center;
+
     text-align: center;
-    transform: translateX(var(--bubble-x));
-    animation: floatBubble 5.8s ease-in-out infinite;
-    animation-delay: var(--bubble-delay);
-    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+    padding: 16px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.12);
+
+    transition:
+        transform .2s ease,
+        box-shadow .2s ease;
+
+    z-index: 2;
+}
+
+.knowledge-bubble:hover {
+
+    transform: scale(1.08);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.18);
+}
+
+.knowledge-bubble:hover {
+
+    transform:
+        translateY(-12px)
+        scale(1.05);
+
+    box-shadow:
+        0 20px 45px rgba(0,0,0,.15);
 }
 
 .knowledge-bubble:hover,
@@ -755,7 +806,7 @@ body {
 .bubble-icon {
     width: 44px;
     height: 44px;
-    border-radius: 50%;
+    border-radius: 28px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1160,4 +1211,363 @@ body {
         transform: scale(1);
         filter: blur(0px);
     }
+}
+.accordion {
+    margin-bottom: 16px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,.08);
+}
+
+.accordion summary {
+    cursor: pointer;
+    padding: 16px;
+    font-weight: 700;
+    color: var(--color-primary);
+    list-style: none;
+}
+
+.accordion summary:hover {
+    background: var(--color-primary-soft);
+}
+
+.accordion-content {
+    padding: 16px;
+    border-top: 1px solid #eee;
+}
+.flip-card {
+    perspective: 1000px;
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 180px;
+    height: 180px;
+
+    transition: transform .8s;
+
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+
+    position: absolute;
+
+    width: 100%;
+    height: 100%;
+
+    backface-visibility: hidden;
+
+    border-radius: 50%;
+}
+
+.flip-card-back {
+    transform: rotateY(180deg);
+}
+.knowledge-showcase {
+    padding: 30px;
+}
+
+.showcase-title {
+    text-align: center;
+
+    font-size: 2rem;
+
+    margin-bottom: 30px;
+
+    color: var(--color-primary);
+}
+
+.knowledge-cards {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 24px;
+
+    flex-wrap: wrap;
+
+    margin-bottom: 40px;
+}
+
+.flip-card {
+    width: 220px;
+    height: 220px;
+}
+
+.flip-card-front,
+.flip-card-back {
+
+    border-radius: 24px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    text-align: center;
+
+    padding: 24px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,.15);
+}
+
+.card-red {
+    background:
+        linear-gradient(
+            135deg,
+            #ff6b6b,
+            #ffb36b
+        );
+
+    color:white;
+}
+
+.card-orange {
+    background:
+        linear-gradient(
+            135deg,
+            #ff9966,
+            #ff5e62
+        );
+
+    color:white;
+}
+
+.card-blue {
+    background:
+        linear-gradient(
+            135deg,
+            #36d1dc,
+            #5b86e5
+        );
+
+    color:white;
+}
+
+.card-green {
+    background:
+        linear-gradient(
+            135deg,
+            #2f7d68,
+            #4ca88f
+        );
+
+    color:white;
+}/* ===== 食品安全知識卡片區 ===== */
+
+.knowledge-info-section {
+
+    margin-top: 50px;
+
+    padding: 30px;
+}
+
+.knowledge-info-section h2 {
+
+    margin-bottom: 25px;
+
+    font-size: 2rem;
+
+    color: var(--color-primary);
+}
+
+/* 卡片網格 */
+
+.info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(12, 1fr);
+
+    gap: 28px;
+}
+.card-large {
+
+    grid-column: span 6;
+
+    min-height: 320px;
+}
+
+.card-wide {
+
+    grid-column: span 6;
+
+    min-height: 280px;
+}
+
+/* 單一卡片 */
+.info-card {
+    grid-column: span 3;
+
+    position: relative;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    min-height: 220px;
+
+    padding: 30px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,.55);
+
+    backdrop-filter:
+        blur(30px);
+
+    -webkit-backdrop-filter:
+        blur(30px);
+
+    border:
+        1px solid rgba(255,255,255,.6);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+
+    box-shadow:
+        0 20px 50px rgba(31,38,135,.12);
+
+    transform-style:
+        preserve-3d;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+.info-card:hover {
+
+    transform:
+        translateY(-12px)
+        scale(1.03);
+
+    box-shadow:
+        0 30px 80px rgba(0,0,0,.15);
+}
+
+.info-card:hover::before {
+
+    opacity: 1;
+}
+
+.info-card:hover::after {
+
+    opacity: 1;
+}
+
+/* icon */
+
+.card-icon {
+
+    font-size: 3.2rem;
+
+    margin-bottom: 20px;
+
+    transition:
+        transform .5s ease;
+
+    position: relative;
+
+    z-index: 2;
+}
+
+.info-card:hover .card-icon {
+
+    transform:
+        rotate(10deg)
+        scale(1.25);
+}
+.info-card:hover .card-icon {
+
+    transform:
+        scale(1.2)
+        rotate(10deg);
+}
+
+.info-card h3 {
+
+    margin-bottom: 15px;
+
+    color: var(--color-primary);
+}
+
+.info-card p {
+
+    line-height: 1.8;
+}
+.info-card::before {
+
+    content: '';
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(76,168,143,.12),
+            rgba(244,184,96,.12)
+        );
+
+    opacity: 0;
+
+    transition: .4s ease;
+}
+.info-card::after {
+
+    content: '';
+
+    position: absolute;
+
+    width: 250px;
+
+    height: 250px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.5),
+            transparent 70%
+        );
+
+    left: var(--mouse-x);
+
+    top: var(--mouse-y);
+
+    transform:
+        translate(-50%,-50%);
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity .3s ease;
+}
+.info-card h3,
+.info-card p {
+
+    text-decoration: none;
+
+    color: inherit;
 }
