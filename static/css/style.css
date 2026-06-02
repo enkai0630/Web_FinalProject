@@ -1491,6 +1491,9 @@ main {
 }
 
 .resource-grid a {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     min-height: 210px;
     display: flex;
     flex-direction: column;
@@ -1500,13 +1503,74 @@ main {
     border: 1px solid var(--line);
     border-radius: var(--radius);
     background: var(--surface);
+    color: var(--text);
     text-decoration: none;
+    box-shadow: 0 18px 38px rgba(35, 42, 38, 0.14);
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.resource-grid a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 24px 48px rgba(35, 42, 38, 0.2);
+}
+
+.resource-grid a::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.34) 0%, rgba(248, 246, 240, 0.68) 100%),
+        linear-gradient(135deg, rgba(47, 111, 94, 0.08), rgba(214, 168, 79, 0.08));
+}
+
+.resource-grid a::after {
+    content: "";
+    position: absolute;
+    inset: -14px;
+    z-index: -2;
+    background-image: var(--resource-image);
+    background-position: center;
+    background-size: cover;
+    filter: blur(3px);
+    opacity: 0.72;
+    transform: scale(1.02);
+}
+
+.resource-grid a > * {
+    position: relative;
 }
 
 .resource-grid svg {
     width: 32px;
     height: 32px;
     color: var(--primary);
+}
+
+.resource-grid span {
+    font-size: 1.2rem;
+    font-weight: 900;
+}
+
+.resource-grid p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.resource-card-sudan {
+    --resource-image: url("../images/sudan-red.jpg");
+}
+
+.resource-card-melamine {
+    --resource-image: url("../images/melamine.jpg");
+}
+
+.resource-card-listeria {
+    --resource-image: url("../images/listeria.jpeg");
+}
+
+.resource-card-bongkrekic {
+    --resource-image: url("../images/bongkrekic-acid.jpg");
 }
 
 .wellness-hero {
