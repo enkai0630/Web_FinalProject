@@ -29,3 +29,23 @@ document.addEventListener('click', (event) => {
 
     setMobileNav(false);
 });
+
+const revealTargets = document.querySelectorAll(
+    '.top-info-section, .journal-section, .sdg-note-section, .feature-band, .flow-section, .tool-section, .resource-section, .wellness-marquee'
+);
+
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    revealTargets.forEach((target) => target.classList.add('reveal-section'));
+
+    const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target.classList.add('is-visible');
+            revealObserver.unobserve(entry.target);
+        });
+    }, { threshold: 0.16 });
+
+    revealTargets.forEach((target) => revealObserver.observe(target));
+} else {
+    revealTargets.forEach((target) => target.classList.add('is-visible'));
+}

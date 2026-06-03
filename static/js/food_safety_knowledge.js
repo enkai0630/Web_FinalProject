@@ -8,6 +8,7 @@ const knowledgeTopics = [
         iconId: 'icon-alert-triangle',
         category: '非法工業染料',
         riskLevel: '高',
+        short: '非法染料與調味粉風險。',
         summary: '蘇丹紅是工業染料，不是合法食品添加物。近年台灣辣椒粉、咖哩粉與調味粉供應鏈曾出現相關事件。',
         possibleFoods: ['辣椒粉', '咖哩粉', '調味粉', '辣味加工食品', '部分醬料'],
         harm: '不應進入食品。長期或大量暴露可能增加健康疑慮，重點風險在於非法添加與供應鏈管理失靈。',
@@ -21,6 +22,7 @@ const knowledgeTopics = [
         iconId: 'icon-heartbeat',
         category: '細菌毒素',
         riskLevel: '極高',
+        short: '保存不當的澱粉類毒素。',
         summary: '米酵菌酸與受污染的澱粉類、發酵或濕熱保存食品有關。2024 年台灣寶林茶室事件讓大眾注意到這類罕見但嚴重的食物中毒。',
         possibleFoods: ['粿條', '河粉', '米製品', '濕熱保存的澱粉類食品', '保存不當的發酵食品'],
         harm: '可能造成嚴重中毒，影響肝臟、腎臟與神經系統，嚴重時可能危及生命。',
@@ -34,6 +36,7 @@ const knowledgeTopics = [
         iconId: 'icon-flask',
         category: '非法摻偽物',
         riskLevel: '高',
+        short: '乳製品摻偽風險。',
         summary: '三聚氰胺曾被非法用來偽裝蛋白質含量，最有名的是奶粉與乳製品相關食安事件。',
         possibleFoods: ['奶粉', '乳製品', '蛋白粉', '含奶加工食品'],
         harm: '可能傷害腎臟與泌尿系統，嬰幼兒與兒童對相關風險更敏感。',
@@ -47,6 +50,7 @@ const knowledgeTopics = [
         iconId: 'icon-bacteria',
         category: '食品中毒細菌',
         riskLevel: '中高',
+        short: '冷藏即食食品也要注意。',
         summary: '李斯特菌可在低溫環境存活，常和即食食品、冷藏熟食、沙拉或熟食加工環境有關。',
         possibleFoods: ['即食餐盒', '熟食沙拉', '冷藏肉品', '未充分殺菌乳製品', '預製義大利麵餐'],
         harm: '一般人可能出現腸胃不適；孕婦、長者、免疫力較弱者可能有更嚴重感染風險。',
@@ -60,6 +64,7 @@ const knowledgeTopics = [
         iconId: 'icon-shield',
         category: '違法加工化學品',
         riskLevel: '高',
+        short: '加工化學品不可混入食品。',
         summary: '食品加工可以使用合法規格與限量的加工助劑，但工業級化學品不能拿來處理食品。台灣曾有豬腸檢出工業級過氧化氫的召回事件。',
         possibleFoods: ['豬腸', '水產加工品', '漂白外觀的加工食材', '來源不明的散裝食品'],
         harm: '若使用不當或殘留過量，可能刺激消化道，也代表加工來源與衛生管理有問題。',
@@ -73,6 +78,7 @@ const knowledgeTopics = [
         iconId: 'icon-alert-triangle',
         category: '重金屬污染',
         riskLevel: '高',
+        short: '兒童與孕婦需特別留意。',
         summary: '鉛不應出現在食品中。2025 年中國幼兒園鉛中毒事件提醒我們，漂亮顏色或不明粉末可能隱藏嚴重風險。',
         possibleFoods: ['來路不明的彩色點心', '使用非法色素的食品', '受污染的水或農產品', '來源不明的兒童食品'],
         harm: '鉛會影響神經系統與發育，兒童、孕婦是高風險族群。',
@@ -86,6 +92,7 @@ const knowledgeTopics = [
         iconId: 'icon-heartbeat',
         category: '不健康脂肪',
         riskLevel: '高',
+        short: '油炸與加工點心常見。',
         summary: '反式脂肪常見於油炸食品、酥皮點心與部分加工食品，會增加心血管疾病風險。',
         possibleFoods: ['洋芋片', '炸雞', '酥皮麵包', '餅乾'],
         harm: '可能提高壞膽固醇並增加心血管疾病風險。',
@@ -99,6 +106,7 @@ const knowledgeTopics = [
         iconId: 'icon-scan',
         category: '營養風險',
         riskLevel: '中高',
+        short: '不一定吃起來很鹹。',
         summary: '高鈉食品不一定吃起來很鹹，常藏在泡麵、醬料、加工肉品與即食餐中。',
         possibleFoods: ['泡麵', '醬料包', '加工肉品', '冷凍調理食品'],
         harm: '長期攝取過量鈉可能影響血壓與心血管健康。',
@@ -124,7 +132,7 @@ function renderTopics() {
             ${iconMarkup(topic.iconId)}
             <div>
                 <h3>${topic.title}</h3>
-                <p>${topic.summary}</p>
+                <p>${topic.short}</p>
             </div>
             <span class="topic-risk">風險 ${topic.riskLevel}</span>
         `;
