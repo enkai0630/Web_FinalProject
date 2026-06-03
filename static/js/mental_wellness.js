@@ -8,6 +8,7 @@ const wellnessTopics = [
         iconId: 'icon-shield',
         category: '壓力太滿時',
         intensity: '立即可做',
+        short: '先把注意力拉回現在。',
         summary: '當腦袋很亂、心跳變快、一直想逃避時，先不要急著解決全部問題，而是把身體和注意力拉回現在。',
         signals: ['呼吸變淺', '肩頸緊繃', '一直滑手機逃避', '腦中重複想同一件事'],
         action: '做 3 回合慢呼吸：吸氣 4 秒、停 1 秒、吐氣 6 秒。吐氣比吸氣長，可以幫助身體從警戒狀態慢慢降下來。',
@@ -20,6 +21,7 @@ const wellnessTopics = [
         iconId: 'icon-heartbeat',
         category: '身體恢復',
         intensity: '需要連續練習',
+        short: '讓大腦重新準備休息。',
         summary: '睡眠不是浪費時間。睡不好會讓情緒調節、記憶整理與專注力都變差，讀書效率也會下降。',
         signals: ['白天容易恍神', '越晚越清醒', '起床後仍然疲累', '咖啡越喝越多'],
         action: '今晚先做一件事：睡前 30 分鐘把手機放遠，改成洗澡、整理書包或聽固定的放鬆音樂，讓大腦建立「準備休息」的線索。',
@@ -32,6 +34,7 @@ const wellnessTopics = [
         iconId: 'icon-message',
         category: '理解自己',
         intensity: '五分鐘練習',
+        short: '把模糊情緒說清楚。',
         summary: '把情緒說清楚，能降低「我整個人都不行了」的混亂感。情緒命名不是裝沒事，而是先讓問題變得可辨識。',
         signals: ['只說得出很煩', '容易對人不耐煩', '想哭但不知道原因', '對小事反應很大'],
         action: '用一句話填空：「我現在感到＿，因為＿，我需要＿。」例如：我現在感到焦慮，因為報告還沒做完，我需要先列三個小步驟。',
@@ -44,6 +47,7 @@ const wellnessTopics = [
         iconId: 'icon-book',
         category: '學生常見壓力',
         intensity: '重新分配能量',
+        short: '先降低開始的門檻。',
         summary: '耗竭不只是懶惰，而是長期高壓後，大腦開始用逃避來保護自己。這時需要降低啟動成本，而不是只罵自己。',
         signals: ['打開講義就想睡', '明明很多事卻動不了', '拖延後更自責', '覺得努力也沒用'],
         action: '把任務切到小到不能再小：不是「讀完一章」，而是「打開 PDF、看兩頁、寫三個關鍵字」。先恢復開始的能力。',
@@ -56,6 +60,7 @@ const wellnessTopics = [
         iconId: 'icon-leaf',
         category: '不要一個人扛',
         intensity: '建立連結',
+        short: '找一個低負擔的出口。',
         summary: '壓力大時，人容易覺得自己應該獨立處理。但適度求助不是能力差，而是資訊管理裡很重要的資源整合。',
         signals: ['不想回訊息', '覺得講了也沒用', '怕麻煩別人', '所有事都自己扛'],
         action: '先傳一則低負擔訊息：「我最近壓力有點大，可以找你講 10 分鐘嗎？」不用一次說完整故事。',
@@ -68,6 +73,7 @@ const wellnessTopics = [
         iconId: 'icon-scan',
         category: '基本盤',
         intensity: '低門檻',
+        short: '先補回身體基本能量。',
         summary: '心理狀態常和身體狀態互相影響。吃飯、喝水、活動和休息不是大道理，而是讓大腦有能量處理問題的基礎。',
         signals: ['忘記吃飯', '整天坐著不動', '只靠咖啡撐', '頭痛或胃不舒服'],
         action: '先做一個最小身體照顧：喝水、吃一點有蛋白質的食物、走到戶外 5 分鐘，或伸展肩頸。',
@@ -92,7 +98,7 @@ function renderWellnessTopics() {
             ${wellnessIconMarkup(topic.iconId)}
             <div>
                 <h3>${topic.title}</h3>
-                <p>${topic.summary}</p>
+                <p>${topic.short}</p>
             </div>
             <span class="topic-risk wellness-tag">${topic.intensity}</span>
         `;
