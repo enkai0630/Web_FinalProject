@@ -54,6 +54,26 @@
     </div>
 </section>
 
+<section class="tool-section mood-scale-section" id="mood-scale" aria-label="心情溫度計自我檢測">
+    <div class="section-heading">
+        <p class="eyebrow">Self Check</p>
+        <h2>心情溫度計</h2>
+        <p>簡式健康量表（BSRS-5）。回想最近一星期（包含今天），這些狀況讓你感到困擾的程度。</p>
+    </div>
+
+    <form class="mood-scale" id="mood-scale-form">
+        <ol class="mood-question-list" id="mood-question-list"></ol>
+        <div class="mood-scale-actions">
+            <button type="submit" class="button button-primary">看結果</button>
+            <button type="reset" class="button button-secondary">重新填寫</button>
+        </div>
+    </form>
+
+    <div class="mood-result" id="mood-result" aria-live="polite" hidden></div>
+
+    <p class="mood-disclaimer">本量表僅供自我了解與參考，不能取代專業診斷。若情緒長期影響生活，請尋求精神醫療或心理衛生專業協助。</p>
+</section>
+
 <section class="resource-section">
     <div class="section-heading">
         <p class="eyebrow">References</p>
@@ -86,4 +106,5 @@
 
 {% block scripts %}
 <script src="{{ url_for('static', filename='js/mental_wellness.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/mood_scale.js') }}" defer></script>
 {% endblock %}

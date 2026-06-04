@@ -2621,3 +2621,249 @@ main {
         width: 100%;
     }
 }
+
+/* ===== 心情溫度計 BSRS-5 ===== */
+.mood-scale {
+    margin-top: 28px;
+    display: grid;
+    gap: 18px;
+}
+
+.mood-question-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--line);
+}
+
+.mood-question {
+    background: var(--surface);
+    padding: clamp(18px, 3vw, 26px);
+    display: grid;
+    gap: 16px;
+}
+
+.mood-question--star {
+    background: var(--surface-muted);
+}
+
+.mood-question-text {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 700;
+    font-size: 1.02rem;
+    color: var(--text);
+}
+
+.mood-no {
+    flex: none;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--primary-soft);
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 900;
+}
+
+.mood-no--star {
+    background: var(--accent-soft);
+    color: var(--accent);
+}
+
+.mood-options {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.mood-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 6px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--bg);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.mood-option input {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.mood-chip {
+    width: 34px;
+    height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-weight: 900;
+    color: var(--muted);
+    transition: inherit;
+}
+
+.mood-option small {
+    color: var(--muted);
+    font-size: 0.72rem;
+    line-height: 1.2;
+}
+
+.mood-option:hover {
+    border-color: var(--primary);
+}
+
+.mood-option:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--primary-soft);
+}
+
+.mood-option:has(input:checked) .mood-chip {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: #fff;
+}
+
+.mood-option:has(input:focus-visible) {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+}
+
+.mood-question--star .mood-option:has(input:checked) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+}
+
+.mood-question--star .mood-option:has(input:checked) .mood-chip {
+    background: var(--accent);
+    border-color: var(--accent);
+}
+
+.mood-scale-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.mood-result {
+    margin-top: 24px;
+    display: grid;
+    gap: 16px;
+}
+
+.mood-result-card {
+    display: flex;
+    align-items: center;
+    gap: clamp(18px, 4vw, 32px);
+    padding: clamp(20px, 4vw, 30px);
+    border: 1px solid var(--line);
+    border-left: 6px solid var(--primary);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+}
+
+.mood-result-card--mild { border-left-color: var(--sun); }
+.mood-result-card--mid { border-left-color: var(--accent); }
+.mood-result-card--high { border-left-color: var(--danger); }
+
+.mood-result-score {
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.05;
+}
+
+.mood-result-score span {
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.mood-result-score strong {
+    font-size: clamp(2.6rem, 7vw, 3.6rem);
+    color: var(--primary);
+}
+
+.mood-result-score small {
+    color: var(--muted);
+}
+
+.mood-result-level {
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: var(--text);
+}
+
+.mood-result-body p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.mood-alert {
+    display: flex;
+    gap: 14px;
+    padding: clamp(18px, 3vw, 24px);
+    border: 1px solid var(--danger);
+    border-radius: var(--radius);
+    background: var(--danger-soft);
+}
+
+.mood-alert svg {
+    flex: none;
+    width: 1.6em;
+    height: 1.6em;
+    margin-top: 2px;
+    color: var(--danger);
+}
+
+.mood-alert strong {
+    color: var(--danger);
+}
+
+.mood-alert p {
+    margin: 4px 0 0;
+    color: var(--text);
+}
+
+.mood-disclaimer {
+    margin: 18px 0 0;
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
+@media (max-width: 640px) {
+    .mood-option small {
+        display: none;
+    }
+
+    .mood-result-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
