@@ -1,15 +1,27 @@
 import configparser
 import json
+import os
 import re
+from pathlib import Path
 
 import requests
 
 
 config = configparser.ConfigParser()
-with open("config.ini", "r", encoding="utf-8") as f:
-    config.read_file(f)
+config_path = Path("config.ini")
+if config_path.exists():
+    with config_path.open("r", encoding="utf-8") as f:
+        config.read_file(f)
 
-API_KEY = config["Gemini"]["API_KEY"]
+
+def get_config_value(section, option, env_name):
+    value = os.environ.get(env_name)
+    if value:
+        return value
+    return config.get(section, option, fallback="")
+
+
+API_KEY = get_config_value("Gemini", "API_KEY", "GEMINI_API_KEY")
 API_URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     f"gemini-2.5-flash:generateContent?key={API_KEY}"

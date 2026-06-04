@@ -3,3 +3,4 @@ flask-cors==6.0.2
 requests==2.33.1
 azure-ai-textanalytics==5.4.0
 azure-core==1.40.0
+gunicorn==23.0.0
