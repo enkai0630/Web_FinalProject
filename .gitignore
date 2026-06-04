@@ -14,6 +14,9 @@ config.ini
 .env
 .env.*
 
+# Separate teammate project copied into this workspace
+cloth-reuse/
+
 # Flask
 instance/
 .webassets-cache
