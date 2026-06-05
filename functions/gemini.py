@@ -1,15 +1,27 @@
 import configparser
 import json
+import os
 import re
+from pathlib import Path
 
 import requests
 
 
 config = configparser.ConfigParser()
-with open("config.ini", "r", encoding="utf-8") as f:
-    config.read_file(f)
+config_path = Path("config.ini")
+if config_path.exists():
+    with config_path.open("r", encoding="utf-8") as f:
+        config.read_file(f)
 
-API_KEY = config["Gemini"]["API_KEY"]
+
+def get_config_value(section, option, env_name):
+    value = os.environ.get(env_name)
+    if value:
+        return value
+    return config.get(section, option, fallback="")
+
+
+API_KEY = get_config_value("Gemini", "API_KEY", "GEMINI_API_KEY")
 API_URL = (
     "https://generativelanguage.googleapis.com/v1beta/models/"
     f"gemini-2.5-flash:generateContent?key={API_KEY}"
@@ -18,11 +30,13 @@ API_URL = (
 FOOD_LABEL_GRADES = {"健康", "可以偶爾吃", "不健康", "無法判斷"}
 
 NORMAL_ROLE = """
+一切回答都要用繁體中文，語氣溫和、清楚，避免過度醫療化。請優先提供有用的食品安全或營養標示相關提醒，讓使用者可以更安心地享受食物。
 你是「心情與食品安全 AI 助手」。使用者心情正常時，請用溫和、清楚的繁體中文回答，
 並主動補充 1 到 2 個食品安全或營養標示相關提醒。回答要短而有用，避免過度醫療化。
 """
 
 NEGATIVE_ROLE = """
+一切回答都要用繁體中文，語氣溫和、清楚，避免過度醫療化。請優先提供情緒支持與陪伴，讓使用者覺得被理解，再視情況提供有用的食品安全或營養標示相關提醒。
 你是「心情與食品安全 AI 助手」。使用者心情偏低時，請優先給予情緒支持與陪伴，
 不要急著教育食品安全知識。回答要溫柔、簡短，先讓使用者覺得被理解。
 """

@@ -1,4 +1,6 @@
 import configparser
+import os
+from pathlib import Path
 
 import requests
 from azure.ai.textanalytics import TextAnalyticsClient
@@ -6,17 +8,45 @@ from azure.core.credentials import AzureKeyCredential
 
 
 config = configparser.ConfigParser()
-with open("config.ini", "r", encoding="utf-8") as f:
-    config.read_file(f)
+config_path = Path("config.ini")
+if config_path.exists():
+    with config_path.open("r", encoding="utf-8") as f:
+        config.read_file(f)
 
-analytics_credential = AzureKeyCredential(config["AzureLanguage"]["LANGUAGE_KEY"])
+
+def get_config_value(section, option, env_name):
+    value = os.environ.get(env_name)
+    if value:
+        return value
+    return config.get(section, option, fallback="")
+
+
+AZURE_LANGUAGE_KEY = get_config_value(
+    "AzureLanguage",
+    "LANGUAGE_KEY",
+    "AZURE_LANGUAGE_KEY",
+)
+AZURE_LANGUAGE_ENDPOINT = get_config_value(
+    "AzureLanguage",
+    "END_POINT",
+    "AZURE_LANGUAGE_ENDPOINT",
+)
+AZURE_VISION_KEY = get_config_value("AzureVision", "KEY", "AZURE_VISION_KEY")
+AZURE_VISION_ENDPOINT = get_config_value(
+    "AzureVision",
+    "END_POINT",
+    "AZURE_VISION_ENDPOINT",
+)
 
 
 def azure_sentiment(user_input):
     """Analyze sentiment with Azure Text Analytics."""
+    if not AZURE_LANGUAGE_KEY or not AZURE_LANGUAGE_ENDPOINT:
+        raise RuntimeError("Azure Language credentials are not configured.")
+
     text_analytics_client = TextAnalyticsClient(
-        endpoint=config["AzureLanguage"]["END_POINT"],
-        credential=analytics_credential,
+        endpoint=AZURE_LANGUAGE_ENDPOINT,
+        credential=AzureKeyCredential(AZURE_LANGUAGE_KEY),
     )
     response = text_analytics_client.analyze_sentiment(
         [user_input],
@@ -44,8 +74,11 @@ def azure_sentiment(user_input):
 
 def azure_computer_vision(image_data):
     """Extract image captions and OCR text with Azure Computer Vision."""
-    endpoint = config["AzureVision"]["END_POINT"]
-    subscription_key = config["AzureVision"]["KEY"]
+    if not AZURE_VISION_KEY or not AZURE_VISION_ENDPOINT:
+        raise RuntimeError("Azure Vision credentials are not configured.")
+
+    endpoint = AZURE_VISION_ENDPOINT
+    subscription_key = AZURE_VISION_KEY
     uri_base = endpoint + "computervision/imageanalysis:analyze"
 
     params = {

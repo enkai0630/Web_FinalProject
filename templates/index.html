@@ -1,89 +1,125 @@
 {% extends "base.html" %}
 {% set active_page = "home" %}
 
-{% block title %}食品安全 AI｜心情與食安助理{% endblock %}
+{% block title %}身心食安助理｜日常飲食與食安判讀{% endblock %}
 
 {% block content %}
 <section class="hero hero-home">
     <div class="hero-copy">
-        <p class="eyebrow">Mind and Food Safety Assistant</p>
-        <h1>把食品標示、食安新聞與日常疑問整理成看得懂的答案。</h1>
-        <p class="hero-lead">這是一個以 Flask 製作的食品安全 AI 專案，保留聊天陪伴，也提供營養標示圖片分析與食安知識整理。</p>
+        <p class="eyebrow">Food and Mind Journal</p>
+        <h1>吃什麼之前，<br>先留一點空間給自己。</h1>
+        <p class="hero-lead">看懂標示，也照顧今天的狀態。</p>
         <div class="hero-actions">
-            <a class="button button-primary" href="#chat-tool">開始詢問</a>
-            <a class="button button-secondary" href="{{ url_for('food_label_page') }}">分析食品標示</a>
+            <a class="button button-primary" href="{{ url_for('food_label_page') }}">上傳標示</a>
+            <a class="button button-secondary" href="#pick-up">查看今日提醒</a>
         </div>
     </div>
-    <div class="hero-visual reminder-board" aria-label="身心食安提醒">
-        <article class="reminder-card reminder-card-primary">
-            <p class="panel-kicker">Daily Check-in</p>
-            <h2>今天吃東西前，先問自己三件事。</h2>
-            <ul class="reminder-list">
-                <li>我現在是真的餓，還是只是壓力很大？</li>
-                <li>這份食物的糖、鈉、油脂會不會太集中？</li>
-                <li>如果標示看不懂，有沒有更清楚的替代選擇？</li>
-            </ul>
+    <div class="hero-visual editorial-visual" aria-label="身心食安提醒視覺">
+        <!-- <article class="editorial-cover">
+            <span>Food and Mind</span>
+            <strong>Read gently.</strong>
+            <p>標示、風險、狀態。</p>
         </article>
-        <article class="reminder-card reminder-card-soft">
-            <svg><use href="#icon-heartbeat"></use></svg>
-            <p>飲食選擇不只看營養數字，也和心情、作息與頻率有關。</p>
+        <article class="editorial-note">
+            <span>Daily Note</span>
+            <strong>標示是線索，不是壓力。</strong>
         </article>
+        <div class="editorial-index" aria-hidden="true">
+            <span>CHECK</span>
+            <span>MIND</span>
+            <span>SAFETY</span>
+        </div> -->
     </div>
 </section>
 
-<section class="top-info-section" aria-label="今日食安提醒">
+<section class="top-info-section" id="pick-up" aria-label="今日食安提醒">
     <div class="section-heading">
-        <p class="eyebrow">TOP INFORMATION</p>
-        <h2>今日食安提醒</h2>
+        <p class="eyebrow">PICK UP</p>
+        <h2>今天先看這件事。</h2>
     </div>
     <div class="top-info-grid">
         <article class="top-info-feature">
             <span class="info-type">TODAY'S NOTE</span>
-            <h3>先看「頻率」和「份量」，再判斷一項食品能不能吃。</h3>
-            <p>單次吃到高糖或高鈉食品不一定代表完全不健康，但如果變成每天固定攝取，就會逐漸變成身體負擔。</p>
+            <h3>比起問能不能吃，更值得先問會不會常常吃。</h3>
+            <p>偶爾吃不是失敗；真正要看的是份量、頻率和搭配。</p>
             <a href="{{ url_for('food_label_page') }}">檢查食品標示 <svg><use href="#icon-arrow-right"></use></svg></a>
         </article>
         <div class="top-info-list">
             <a href="{{ url_for('food_safety_knowledge_page') }}">
                 <time>GUIDE</time>
-                <span>看懂糖、鈉、脂肪與成分排序</span>
+                <span>看懂糖、鈉與脂肪</span>
             </a>
             <a href="{{ url_for('food_safety_knowledge_page') }}">
                 <time>KNOWLEDGE</time>
-                <span>從食安事件學會辨識高風險食品</span>
+                <span>辨識高風險食品</span>
             </a>
             <a href="{{ url_for('mental_wellness_page') }}">
                 <time>WELLNESS</time>
-                <span>壓力大時，先把飲食選擇降到簡單可執行</span>
+                <span>壓力大時先簡化選擇</span>
             </a>
         </div>
     </div>
 </section>
 
-<section class="feature-band" aria-label="主要功能">
+<section class="journal-section" aria-label="身心食安專題">
+    <aside class="journal-board" aria-label="專題索引">
+        <span>Issue 03</span>
+        <strong>Food Safety<br>and Well-being</strong>
+        <p>SDG 3 / SDG 16</p>
+    </aside>
+    <div class="journal-copy">
+        <p class="eyebrow">JOURNAL</p>
+        <h2>食安不是只看能不能吃，也是在理解自己怎麼選。</h2>
+        <p>同一份食品，放在不同生活狀態裡，答案可能不一樣。</p>
+        <dl class="journal-list">
+            <div>
+                <dt>Label</dt>
+                <dd>看懂標示。</dd>
+            </div>
+            <div>
+                <dt>Safety</dt>
+                <dd>理解風險。</dd>
+            </div>
+            <div>
+                <dt>Mind</dt>
+                <dd>照顧狀態。</dd>
+            </div>
+        </dl>
+    </div>
+</section>
+
+<section class="sdg-note-section" aria-label="SDG 專題關聯">
+    <div class="sdg-note">
+        <span>SDG Focus</span>
+        <p><strong>SDG 3</strong>：從日常飲食照顧健康。</p>
+        <p><strong>SDG 16</strong>：讓食安資訊更透明。</p>
+    </div>
+</section>
+
+<section class="feature-band" aria-label="主要專題">
     <a class="feature-card feature-card-primary" href="{{ url_for('food_label_page') }}">
         <svg><use href="#icon-scan"></use></svg>
         <small>CHECK</small>
         <span>食品標示分析</span>
-        <p>上傳食品標示圖片，透過 OCR 與 AI 產生健康程度、理由與建議。</p>
+        <p>把標示整理成可讀的判斷。</p>
     </a>
     <a class="feature-card" href="{{ url_for('food_safety_knowledge_page') }}">
         <svg><use href="#icon-book"></use></svg>
         <small>KNOWLEDGE</small>
         <span>食品安全知識</span>
-        <p>用主題卡片快速理解蘇丹紅、米酵菌酸、李斯特菌等食安事件。</p>
+        <p>用主題認識常見食安事件。</p>
     </a>
     <a class="feature-card" href="{{ url_for('mental_wellness_page') }}">
         <svg><use href="#icon-heartbeat"></use></svg>
         <small>WELLNESS</small>
         <span>心靈補給</span>
-        <p>整理壓力大時能立刻做的小步驟，也補充睡眠、情緒與身心健康知識。</p>
+        <p>把壓力、睡眠與飲食放在一起看。</p>
     </a>
     <a class="feature-card feature-card-quiet" href="#chat-tool">
         <svg><use href="#icon-message"></use></svg>
-        <small>ASK</small>
-        <span>日常諮詢</span>
-        <p>用平常說話的方式詢問食品標示、食安風險與飲食選擇。</p>
+        <small>ROOM</small>
+        <span>身心食安相談室</span>
+        <p>把疑問整理成下一步。</p>
     </a>
 </section>
 
@@ -93,73 +129,77 @@
             <p class="eyebrow">FLOW</p>
             <h2>從看標示，到照顧自己的狀態。</h2>
         </div>
-        <p>把食品安全、營養標示與身心健康放在同一條流程裡，讓判斷更完整，也更貼近日常。</p>
+        <p>四個步驟，讓判斷更輕一點。</p>
     </div>
     <div class="flow-track">
         <article class="flow-card">
             <span>01</span>
             <h3>Check Label</h3>
-            <p>先確認糖、鈉、脂肪與成分排序，找出真正需要注意的地方。</p>
+            <p>先看標示重點。</p>
         </article>
         <article class="flow-card">
             <span>02</span>
             <h3>Read Risk</h3>
-            <p>把食安事件與常見風險整理成容易理解的提醒，而不是只看結論。</p>
+            <p>理解風險來源。</p>
         </article>
         <article class="flow-card">
             <span>03</span>
             <h3>Balance Mind</h3>
-            <p>壓力、睡眠與情緒會影響飲食選擇，先用小步驟降低負擔。</p>
+            <p>留意今天的狀態。</p>
         </article>
         <article class="flow-card">
             <span>04</span>
             <h3>Ask Clearly</h3>
-            <p>遇到不確定的內容，再用對話把標示、風險與選擇整理清楚。</p>
+            <p>需要時再整理。</p>
         </article>
     </div>
 </section>
 
 <section class="tool-section ask-section" id="chat-tool">
     <div class="section-heading">
-        <p class="eyebrow">ASK</p>
-        <h2>需要時，再打開對話。</h2>
-        <p>這裡不是要取代你的判斷，而是幫你把食品標示、食安風險與當下狀態整理得更清楚。</p>
+        <p class="eyebrow">ROOM</p>
+        <h2>需要整理時，進入相談室。</h2>
+        <p>把問題拆成重點、提醒與下一步。</p>
     </div>
 
     <div class="ask-shell">
         <aside class="prompt-board" aria-label="建議提問">
             <div>
-                <p class="eyebrow">Try Asking</p>
-                <h3>可以先從這些問題開始</h3>
+                <p class="eyebrow">Consultation Topics</p>
+                <h3>選一個情境開始整理</h3>
             </div>
             <button type="button" class="prompt-card" data-prompt="這個食品標示要怎麼看才知道健不健康？">
                 <span>01</span>
-                <strong>這個食品標示要怎麼看？</strong>
+                <div>
+                    <small>Label Reading</small>
+                    <strong>看懂一份食品標示</strong>
+                    <p>糖、鈉、脂肪怎麼看。</p>
+                </div>
             </button>
             <button type="button" class="prompt-card" data-prompt="壓力大時很想吃甜食，有沒有比較不傷身的選擇？">
                 <span>02</span>
-                <strong>壓力大時想吃甜食怎麼辦？</strong>
+                <div>
+                    <small>Mind and Food</small>
+                    <strong>壓力下的飲食選擇</strong>
+                    <p>先照顧當下狀態。</p>
+                </div>
             </button>
             <button type="button" class="prompt-card" data-prompt="高鈉食品會對身體造成什麼影響？">
                 <span>03</span>
-                <strong>高鈉食品會有什麼影響？</strong>
+                <div>
+                    <small>Risk Note</small>
+                    <strong>理解一個食安風險</strong>
+                    <p>把風險變成提醒。</p>
+                </div>
             </button>
-            <div class="insight-panel insight-panel-compact" aria-label="對話分析資訊">
-                <article>
-                    <h3>狀態</h3>
-                    <div class="sentiment-display">
-                        <span class="sentiment-badge">尚未分析</span>
-                        <span class="sentiment-score">分數: --</span>
-                    </div>
-                </article>
-                <article>
-                    <h3>主題</h3>
-                    <ul class="keyword-list">
-                        <li>食品營養標示</li>
-                        <li>糖、鈉與脂肪</li>
-                        <li>食品添加物</li>
-                    </ul>
-                </article>
+            <div class="room-note-panel" aria-label="相談室整理方式">
+                <span>Room Note</span>
+                <p>這裡不急著給答案，先把資訊整理成能理解的下一步。</p>
+                <ul>
+                    <li>標示</li>
+                    <li>風險</li>
+                    <li>狀態</li>
+                </ul>
             </div>
         </aside>
 
@@ -168,18 +208,33 @@
                 <div class="chat-intro">
                     <span class="chat-intro-mark"><svg><use href="#icon-leaf"></use></svg></span>
                     <div>
-                        <strong>食安小幫手</strong>
-                        <small>可以問食品標示、食安風險，也可以先聊聊今天的狀態。</small>
+                        <strong>身心食安相談室</strong>
+                        <small>每次回覆會盡量整理成重點、提醒與下一步。</small>
                     </div>
                 </div>
                 <span class="status-badge">待命中</span>
             </div>
 
             <div class="chat-messages" id="chat-messages" aria-live="polite">
-                <div class="chat-message chat-message--ai">
-                    <div class="message-avatar">食</div>
+                <div class="chat-message chat-message--ai chat-message--welcome">
+                    <div class="message-avatar">NOTE</div>
                     <div class="message-content">
-                        <p>你好。你可以直接問我「這個食品標示怎麼看？」、「高鈉會有什麼影響？」或「今天壓力大時該怎麼選食物？」我會用比較好理解的方式幫你整理。</p>
+                        <span class="message-kicker">Consultation Note</span>
+                        <p>寫下食品、標示數字或今天的狀態。這裡先整理，不急著下結論。</p>
+                        <div class="consult-note-grid" aria-label="回覆整理方式">
+                            <article>
+                                <strong>重點</strong>
+                                <span>先抓出問題核心</span>
+                            </article>
+                            <article>
+                                <strong>提醒</strong>
+                                <span>標出需要留意的風險</span>
+                            </article>
+                            <article>
+                                <strong>下一步</strong>
+                                <span>整理可執行的選擇</span>
+                            </article>
+                        </div>
                         <div class="message-meta">
                             <time class="message-time">現在</time>
                         </div>
@@ -189,8 +244,8 @@
 
             <footer class="chat-form">
                 <form id="chat-form">
-                    <input type="text" class="chat-input" id="chat-input" placeholder="輸入你的問題，例如：反式脂肪為什麼不健康？" required>
-                    <button type="submit" class="chat-submit">送出</button>
+                    <input type="text" class="chat-input" id="chat-input" placeholder="寫下想整理的問題，例如：反式脂肪為什麼不健康？" required>
+                    <button type="submit" class="chat-submit">整理</button>
                 </form>
             </footer>
         </section>
@@ -208,24 +263,16 @@
             <p class="eyebrow">FAQ</p>
             <h2>使用前可以先知道的事。</h2>
         </div>
-        <p>這個專案適合用來整理資訊與輔助判斷；如果牽涉疾病、用藥或急性症狀，仍應優先找專業人員確認。</p>
+        <p>日常整理可以在這裡開始；專業問題仍交給專業人員。</p>
     </div>
     <div class="faq-list">
         <details class="faq-item">
-            <summary>AI 的回答可以當成醫療或營養診斷嗎？</summary>
+            <summary>這裡的整理可以當成醫療或營養診斷嗎？</summary>
             <p>不建議。這裡的回答比較適合作為資訊整理與日常提醒，不能取代醫師、營養師或心理師的專業判斷。</p>
         </details>
         <details class="faq-item">
             <summary>食品標示分析主要會看哪些內容？</summary>
             <p>會優先整理糖、鈉、脂肪、熱量、成分排序與可能需要注意的添加物，再用比較白話的方式給出原因與建議。</p>
-        </details>
-        <details class="faq-item">
-            <summary>為什麼要把身心健康和食品安全放在一起？</summary>
-            <p>很多飲食選擇和壓力、睡眠、情緒有關。把這兩個面向一起看，會比只看營養數字更接近真實生活。</p>
-        </details>
-        <details class="faq-item">
-            <summary>如果上傳圖片辨識不清楚怎麼辦？</summary>
-            <p>可以重新拍攝較亮、較平整的標示，或直接把你看得到的營養數字打到對話框，讓系統協助整理。</p>
         </details>
     </div>
 </section>
