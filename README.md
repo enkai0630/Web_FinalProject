@@ -124,7 +124,7 @@ web_SDGs_final_project/
 ### 1. Clone 專案
 
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/enkai0630/Web_FinalProject.git
 cd web_SDGs_final_project
 ```
 
